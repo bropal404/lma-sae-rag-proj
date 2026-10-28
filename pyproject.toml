@@ -1,0 +1,49 @@
+[project]
+name = "saerag"
+version = "0.1.0"
+description = "SAE-gated RAG: a query-time probe that chooses answer, retrieve or abstain before generation"
+authors = [
+    { name = "Gopal Kataria", email = "gopal.kataria@research.iiit.ac.in" },
+    { name = "Nidhi Vaidya" },
+    { name = "Manya Jain" },
+    { name = "Salvik Krishna" },
+]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "datasets>=3.0",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pyyaml>=6.0",
+    "scikit-learn>=1.5",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+# BM25 over the DPR Wikipedia dump (needs Java 21+) and the dense retriever for the shift test.
+retrieval = [
+    "pyserini>=0.44",
+    "faiss-cpu>=1.8",
+]
+# Generation, activations and SAEs. Install on the GPU node only.
+gpu = [
+    "torch>=2.5",
+    "transformers>=4.50",
+    "vllm>=0.8",
+    "sae-lens>=6.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.24,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

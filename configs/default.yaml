@@ -1,0 +1,53 @@
+# Single source of truth for every run. Change values here, not in code.
+# Decisions behind these values: docs/DECISIONS.md (D-numbers below).
+
+seed: 13
+
+paths:
+  root: data                     # override with SAERAG_DATA=/shared/path on the cluster
+  questions: data/questions      # D9: {dataset}_{split}.jsonl
+  retrieval: data/retrieval      # {retriever}/{dataset}_{split}.jsonl
+  generations: data/generations  # {condition}/{dataset}_{split}.jsonl
+  labels: data/labels            # {variant}/{dataset}_{split}.jsonl
+  features: data/features        # {model_tag}/L{layer}/{kind}_{dataset}_{split}.npy
+  results: runs
+
+model:                           # D1, confirmed in Phase 0
+  generator: google/gemma-3-4b-it
+  tag: gemma3-4b-it
+  sae_release: null              # filled by Person 3 after the coverage check
+  sae_widths: []                 # two widths, e.g. [16k, 262k]
+  layers: []                     # six layers, early / middle / late
+
+generation:                      # D4
+  max_new_tokens: 32
+  temperature: 0.0
+  batch_size: 64
+
+retrieval:                       # D2, D3
+  corpus: wikipedia-dpr-100w
+  bm25_index: wikipedia-dpr-100w # pyserini prebuilt
+  top_k: 3
+  hole_fetch_k: 100
+  hole_fraction: 0.30
+  hole_datasets: [nq, triviaqa, hotpotqa]
+  dense:                         # D12, week 3
+    encoder: intfloat/e5-base-v2
+    subsample: 2000000
+
+datasets:                        # D8: sizes are planning sizes from the proposal
+  nq:        {train: 4000, val: 500, test: 1000}
+  triviaqa:  {train: 4000, val: 500, test: 1000}
+  popqa:     {test: 1000}
+  hotpotqa:  {test: 1000}
+  selfaware: {test: 500}
+
+pilot:
+  n: 500                         # drawn from nq + triviaqa train
+  gate_min_class_share: 0.15
+
+labels:                          # D7
+  variants: [default, miss_as_retrieve]
+
+operating_points:
+  max_false_refusal: 0.10

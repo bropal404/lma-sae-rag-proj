@@ -1,0 +1,15 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# large artefacts live outside git (see README: shared data root)
+data/
+runs/
+indexes/
+*.npy
+*.npz
+*.safetensors
+wandb/
