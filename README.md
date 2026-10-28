@@ -1,5 +1,7 @@
 # SAE-Gated RAG
 
+> **Please go through [TODO.md](TODO.md)** for who is doing what.
+
 A frozen LLM reads only the question. A probe on its SAE features (or on the dense activation) picks **ANSWER**, **RETRIEVE** or **ABSTAIN** before any retrieval or generation happens.
 The proposal is the PDF in this directory. The work plan is in [docs/PLAN.md](docs/PLAN.md), and the choices the code assumes are in [docs/DECISIONS.md](docs/DECISIONS.md).
 
