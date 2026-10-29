@@ -1,0 +1,347 @@
+[
+  {
+    "dataset": "nq_train",
+    "qid": "nq:a2f1b7fc2b8ad5da56f1",
+    "question": "who made the 2018 pro football hall of fame",
+    "answers": [
+      "Randy Moss",
+      "Bobby Beathard",
+      "Robert Brazile",
+      "Terrell Owens",
+      "Brian Urlacher",
+      "Brian Dawkins",
+      "Jerry Kramer",
+      "Ray Lewis"
+    ],
+    "removed_ids": [
+      "313681#36",
+      "701992#4",
+      "313681#1",
+      "701992#0",
+      "113275#1"
+    ],
+    "retained": [
+      {
+        "title": "2018 NFL season",
+        "text": "\"Football League Players Association filed a grievance with the league over the policy on July 11. The following people associated with the NFL (or AFL) have died in 2018. Training camps for the 2018 season were held in late July through August. Teams started training camp no earlier than 15 days before the team's first scheduled preseason game. The Pro Football Hall of Fame Game, in which the Baltimore Ravens defeated the Chicago Bears 17–16, was played on August 2; and was televised nationally"
+      },
+      {
+        "title": "Pro Football Hall of Fame",
+        "text": "\"Radio-Television Award despite his well-known association with \"\"Monday Night Football\"\". An August 2010 \"\"Sports Illustrated\"\" article hints that Cosell may have even been \"\"blacklisted\"\" by the NFL. As the late 2010s approached, a number of controversial and polarizing figures began to reach eligibility for the Hall. Terrell Owens's exclusion from the Hall in his first two years of eligibility despite his strong individual statistics was a subject of public debate. Owens was elected to the Ha"
+      },
+      {
+        "title": "Bud Adams",
+        "text": "\"American Basketball Association and the owner of the second Nashville Kats franchise of the Arena Football League. He was elected to the American Football League Hall of Fame, an online site, but as of 2018 is not a member of the Pro Football Hall of Fame, despite several nominations and an ongoing effort to make him such. Adams had many business interests in the Houston area. A member of the Cherokee Nation who originally made his fortune in the petroleum business, Adams was chairman and CEO o"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:df14f6777355f5616222",
+    "question": "who plays sally in the cat in the hat",
+    "answers": [
+      "Dakota Fanning"
+    ],
+    "removed_ids": [
+      "884665#6",
+      "762496#24",
+      "762496#0"
+    ],
+    "retained": [
+      {
+        "title": "The Cat in the Hat Comes Back",
+        "text": "\"The Cat in the Hat Comes Back The Cat in the Hat Comes Back is a children's book written and illustrated by Dr. Seuss and published by Random House in 1958. The book is a sequel to \"\"The Cat in the Hat\"\". Once again, Sally and her brother are being left home alone for the day, but this time, their mother has left them with instructions to clear away a large amount of snow while she is out for the day. However, they are soon interrupted in their work by the arrival of the Cat in the Hat. Sally w"
+      },
+      {
+        "title": "The Cat in the Hat",
+        "text": "\"The Cat in the Hat The Cat in the Hat is a children's book written and illustrated by Theodor Geisel under the pen name Dr. Seuss and first published in 1957. The story centers on a tall anthropomorphic cat, who wears a red and white-striped hat and a red bow tie. The Cat shows up at the house of Sally and her brother one rainy day when their mother is away. Despite the repeated objections of the children's fish, the Cat shows the children a few of his tricks in an attempt to entertain them. In"
+      },
+      {
+        "title": "The Cat in the Hat (TV special)",
+        "text": "\"The Cat in the Hat (TV special) The Cat in the Hat is an American animated musical television special first aired on CBS on July 4, 1971, based on the 1957 Dr. Seuss children's book of the same name, and produced by DePatie–Freleng Enterprises. With voices by Allan Sherman and prolific vocal performer Daws Butler, this half-hour special is a loose adaptation with added musical sequences. As the story opens, it is too rainy and cold to play outside, so Sally and Conrad sit bored and look out the"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:06be89837f8643ad1bfe",
+    "question": "who introduced the system of civil services in india",
+    "answers": [
+      "Charles Cornwallis"
+    ],
+    "removed_ids": [
+      "1949072#2"
+    ],
+    "retained": [
+      {
+        "title": "Civil service",
+        "text": "\"to urge the adoption for England of something similar. The first concrete step in this direction was taken by the British East India Company in 1806.\"\" In that year, the Honourable East India Company established a college, the East India Company College, near London to train and examine administrators of the Company's territories in India. \"\"The proposal for establishing this college came, significantly, from members of the East India Company's trading post in Canton, China.\"\" Examinations for "
+      },
+      {
+        "title": "All India Services Act, 1951",
+        "text": "\"All India Services Act, 1951 The All India Services Act, 1951 (IAST: ) is an Indian legislation. The Act established two All India Services and provides for the creation of three more. During the occupation of India by the East India Company, the civil services were divided into three — covenanted, uncovenanted and special civil services. The covenanted civil service, or the Honourable East India Company's Civil Service (HEICCS), as it was called, largely consisted of British civil servants occ"
+      },
+      {
+        "title": "Telangana State Public Service Commission",
+        "text": "\"1882, Salar Jung issued the extraordinary Jareeda and emphasized the need of educating and training the young Hyderabadis for recruitment in the Nizam’s Services. He propounded the idea of building an efficient administrative system on the model of British India and introduced several administrative reforms. He dismantled the old/archaic administrative structure and streamlined the public institutions by creating a distinct civil service class. The establishment of Zilabandi system, creation of"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:d0fc1d50d867a8f21626",
+    "question": "who played the prime minister in love actually",
+    "answers": [
+      "Grant"
+    ],
+    "removed_ids": [
+      "701049#16",
+      "116763#15",
+      "701049#8",
+      "83504#32"
+    ],
+    "retained": [
+      {
+        "title": "Acting prime minister",
+        "text": "\"if the incumbent is temporarily incapacitated. Whilst in other countries the term \"\"Acting Prime Minister\"\" only refers to an individual actually performing the role, in Israel the term is also in use when a designated Minister is allocated, even if they never actually perform the role. In New Zealand, the Acting Prime Minister is the designated head of government when the incumbent is not available to fulfill their duties. This includes when the Prime Minister is overseas, unwell, or otherwise"
+      },
+      {
+        "title": "Deputy Prime Minister of Mauritius",
+        "text": "\"Deputy Prime Minister of Mauritius The Deputy Prime Minister of the Republic Mauritius () is the senior member of the Cabinet of Mauritius. The actual Deputy Prime Minister Ivan Collendavelloo was appointed by the President on 20 December 2016 after the resignation of Xavier-Luc Duval. The Deputy Prime Minister is the first in line to succeed the Prime Minister on a temporary basis in case the latter is out of the country, sick, resigns or dies suddenly. According to the Constitution of Mauriti"
+      },
+      {
+        "title": "Prime Minister & I",
+        "text": "\"what the public doesn't know is that despite his perfect image, Yul is actually a struggling father devoid of even the most basic of parenting skills. Nam Da-jung (Im Yoon-ah) is a journalist from Scandal News who resorts to writing for a trashy tabloid to support her ailing father, but when she chases Prime Minister Kwon for a lucrative exposé, she ends up scooping a whole lot more than she bargained for and the two end up in a contract marriage and fall in love with each other . Nam Da-jung i"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:7b8eb53bb1e374df0307",
+    "question": "quorn is a source of protein derived from",
+    "answers": [
+      "Fusarium venenatum fungus"
+    ],
+    "removed_ids": [
+      "98084#0"
+    ],
+    "retained": [
+      {
+        "title": "Mycoprotein",
+        "text": "\"Mycoprotein Mycoprotein is a form of single-cell protein, also known as fungal protein, is defined in the \"\"Oxford English Dictionary\"\" as \"\"Protein derived from fungi, especially as produced for human consumption.\"\" \"\"Myco\"\" is from the Greek word for \"\"fungus\"\". The only mycoprotein on sale in Europe and North America is called Quorn, created from \"\"Fusarium venenatum.\"\" In the 1960s \"\"F. venenatum\"\" was identified by the English company Rank Hovis McDougall as a potential protein source for "
+      },
+      {
+        "title": "Quorn",
+        "text": "\"protein-rich food for human consumption. The filamentous fungus, \"\"Fusarium venenatum\"\", was discovered in a soil sample in 1967. In 1985, RHM was given permission to sell mycoprotein for human consumption after a ten-year evaluation programme. Quorn as a retail product (it derives its name from the Leicestershire village of Quorn) was first produced in 1985 by Marlow Foods (named after Rank Hovis McDougall's headquarters in Marlow, Buckinghamshire), a joint venture between RHM and Imperial Che"
+      },
+      {
+        "title": "Meat analogue",
+        "text": "\"lamb, ham, sausage, seafood, etc. Other alternatives use modified defatted peanut flour, Yuba and textured vegetable protein (TVP); yuba and TVP are both soy-based meat analogues, the former made by layering the thin skin which forms on top of boiled soy milk, and the latter being a dry bulk commodity derived from soy and soy protein concentrate. Some meat analogues include mycoprotein, such as Quorn which usually uses egg white as a binder. In April 2013, Beyond Meat began selling Beyond Chick"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:3fd8501dbc7846e231b9",
+    "question": "when do we celebrate mother's day in india",
+    "answers": [
+      "second Sunday of May"
+    ],
+    "removed_ids": [
+      "18908#36",
+      "18908#73",
+      "18908#45",
+      "18908#78"
+    ],
+    "retained": [
+      {
+        "title": "Vikki Thorn",
+        "text": "\"to what Donna was doing. So that was the good thing about it. That challenged me a little bit and I got to play electric guitar.\"\" The group's eighth studio album, \"\"Ironbark\"\" (February 2017), led Thorn to reflect on their being together for 25 years, \"\"I just sent an email the other day saying 'When the tour's over, when do we celebrate?' We need to have a party, we need to have something where we sit down and celebrate, just have a toast.\"\" Vikki Thorn and bandmate, Josh Cunningham, had a ro"
+      },
+      {
+        "title": "Bounce (Iggy Azalea song)",
+        "text": "\"mother's, and it was the biggest party, the most fun ever. So when I was doing 'Bounce', you know I don't actually drink or smoke so I thought I don't wanna do a video in a club like poppin' bottles and all this stuff, although the song's about partying. I [wanted to] do a celebration... and it made me think of that experience with my mother's friend going to an Indian wedding and having the most crazy and amazing time and I though I wanna do an Indian wedding! And I wanna do it in India! And I"
+      },
+      {
+        "title": "Ethiopia–India relations",
+        "text": "\"stirring call for solidarity with Abyssinia, noting that \"\"We in India can do nothing to help our brethren in distress in Ethiopia for we are also victims of imperialism but we stand with them today in their sorrow as we hope to stand together when better days come\"\". Upon India's independence in 1947, it sent a goodwill mission to Ethiopia and diplomatic relations were established the following year. In 1950 the countries formalised their diplomatic ties and Sardar Sant Singh was appointed Ind"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:46e27395426ab7e1a8ad",
+    "question": "where is the peace tower located in canada",
+    "answers": [
+      "Ottawa, Ontario"
+    ],
+    "removed_ids": [
+      "593726#0",
+      "593726#3",
+      "402880#1",
+      "299226#3",
+      "1678463#0"
+    ],
+    "retained": [
+      {
+        "title": "Flag of Canada",
+        "text": "\"House of Commons to distribute flags and lapel pins in the shape of the Canadian flag to their constituents. Full-size flags that have been flown on Peace Tower and four other locations on Parliament Hill are packaged by the Department of Public Works and offered to the public free of charge. As of May 1, 2018, the program has a 99-year waiting list for Peace Tower flags, which are in size, and an 86-year waiting list for flags from the other four locations (one on each side of Centre Block and"
+      },
+      {
+        "title": "Peace Tower",
+        "text": "\"with the end of the First World War. With this in mind, Prime Minister Robert Borden dedicated the site of the tower on 1 July 1917, with the words: \"\"[the tower will be a] memorial to the debt of our forefathers and to the valour of those Canadians who, in the Great War, fought for the liberties of Canada, of the Empire, and of humanity.\"\" Two years later, the Peace Tower's foundation stone was laid by Prince Edward, Prince of Wales (later King Edward VIII), during his wider royal tour of Cana"
+      },
+      {
+        "title": "Peace Arch Park",
+        "text": "\"Peace Arch Park Peace Arch Park is an international park consisting of Peace Arch Historical State Park in the United States and Peace Arch Provincial Park in Canada. The park straddles the international boundary between the United States and Canada at the extreme western end of the main contiguous section of the two countries' land border, where it reaches Semiahmoo Bay of Puget Sound on the continent's Pacific Coast. The park's central feature is the Peace Arch. The park is located at the Pea"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:0ae8f6d908c9b84a41d2",
+    "question": "what goods were sent to africa during the triangle trade",
+    "answers": [
+      "copper",
+      "trinkets",
+      "ammunition",
+      "cloth",
+      "guns",
+      "slave beads"
+    ],
+    "removed_ids": [
+      "1772783#39",
+      "19907#20",
+      "144348#5",
+      "1452545#20",
+      "2711275#7"
+    ],
+    "retained": [
+      {
+        "title": "History of Rhode Island",
+        "text": "\"1774, the slave population of Rhode Island was 6.3 percent, nearly twice as high as any other New England colony. In the late 18th century, several Rhode Island merchant families began actively engaging in the triangle trade, most notably the Browns for whom Brown University is named. In the years after the Revolution, Rhode Island merchants controlled between 60 and 90 percent of the American trade in African slaves. In the 18th century, Rhode Island's economy depended largely upon the triangl"
+      },
+      {
+        "title": "Bristol",
+        "text": "\"colonies in the 17th century. Bristol's location on the west side of Great Britain gave its ships an advantage in sailing to and from the New World, and the city's merchants made the most of it. The 18th century saw an expansion of England's role in the Atlantic trade in Africans taken for slavery to the Americas. Bristol and Liverpool became centres of the Triangular Trade. In the first side of the slavery triangle, manufactured goods were shipped to West Africa and exchanged for Africans; the"
+      },
+      {
+        "title": "Proto-globalization",
+        "text": "\"and 18th centuries, initially created to further trade in the East Indies. The company controlled trading from India to East and Southeast Asia. One of the key contributors to globalization was the \"\"Triangular Trade\"\" and how it connected the world. The Triangular Trade or Triangle Trade was a system used to connect three areas of the world through trade. Once traded, items and goods were shipped to other parts of the world, making the triangle trade a key to global trade. The Triangle Trade s"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:e3297f7b26ba839a62e3",
+    "question": "embryo refers to the stage of development between weeks",
+    "answers": [
+      "the first eight weeks"
+    ],
+    "removed_ids": [
+      "1259987#1",
+      "36217#4",
+      "1259987#0"
+    ],
+    "retained": [
+      {
+        "title": "Abortion in Afghanistan",
+        "text": "\"different stages they pass through, and the stage affects the acceptability of the procedure. Prenatal Development outlines these different stages. From conception, when the sperm and egg fuse in the fallopian tube, until week 5 of the pregnancy, it is referred to as the zygote. From week 5 until week 10 of the pregnancy, it is referred to as an embryo. At week 10 in the pregnancy, the embryo becomes a fetus and development of all organ systems and body parts begins. At around the 38-40th week,"
+      },
+      {
+        "title": "Embryo",
+        "text": "\"a sphere or sheet of cells, also called blastomeres. In a placental mammal, an ovum is fertilized in a fallopian tube through which it travels into the uterus. An embryo is called a fetus at a more advanced stage of development and up until birth or hatching. In humans, this is from the eleventh week of gestation. However, animals which develop in eggs outside the mother's body, are usually referred to as embryos throughout development; e.g. one would refer to a chick embryo, not a \"\"chick fetu"
+      },
+      {
+        "title": "Development of the human body",
+        "text": "\"develops both into embryonic and extra-embryonic tissue, the latter forming the fetal membranes and the placenta. In humans, the embryo is referred to as a fetus in the later stages of prenatal development. The transition from embryo to fetus is arbitrarily defined as occurring 8 weeks after fertilization. In comparison to the embryo, the fetus has more recognizable external features and a set of progressively developing internal organs. A nearly identical process occurs in other species. Human"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:0ae5f45473458b5ae120",
+    "question": "who are the hosts of british baking show",
+    "answers": [
+      "Noel Fielding",
+      "Sue Perkins",
+      "Sandi Toksvig",
+      "Mel Giedroyc"
+    ],
+    "removed_ids": [
+      "2985436#0",
+      "2985436#14",
+      "2653470#0",
+      "2051316#30",
+      "784008#12"
+    ],
+    "retained": [
+      {
+        "title": "The Great Kiwi Bake Off",
+        "text": "\"recap special called \"\"An Extra Slice\"\", hosted by Chris Parker, discussing the episode of the week and interviewing contestants who have been eliminated. The Great Kiwi Bake Off The Great Kiwi Bake Off is a New Zealand television baking competition based off \"\"The Great British Bake Off\"\" in which 12 amateur bakers compete in a series of baking challenges. The show's first episode was aired on 16 October 2018 on TVNZ 2. The show is hosted by Hayley Sproull and Madeleine Sami, with judges Dean "
+      },
+      {
+        "title": "The Great American Baking Show",
+        "text": "\"Baking Show: Holiday Edition\"\". Adams returned for his second season as host, with former Spice Girls singer Emma Bunton as new host. Joining Paul Hollywood on the judging panel is American pastry chef and restaurateur, Sherry Yard. The Great American Baking Show The Great American Baking Show is an American cooking competition television series and an adaptation of \"\"The Great British Bake Off\"\" (which is aired in the United States under the title \"\"The Great British Baking Show\"\"). Its first "
+      },
+      {
+        "title": "The Great Kiwi Bake Off",
+        "text": "\"The Great Kiwi Bake Off The Great Kiwi Bake Off is a New Zealand television baking competition based off \"\"The Great British Bake Off\"\" in which 12 amateur bakers compete in a series of baking challenges. The show's first episode was aired on 16 October 2018 on TVNZ 2. The show is hosted by Hayley Sproull and Madeleine Sami, with judges Dean Brettschneider and Sue Fleischl. The show, like other spinoffs of \"\"The Great British Bake Off\"\", uses a similar style, format, and opening theme song to t"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:a52e82e84afb0def86d3",
+    "question": "when did the nba go to 82 games",
+    "answers": [
+      "1967–68"
+    ],
+    "removed_ids": [
+      "635161#1"
+    ],
+    "retained": [
+      {
+        "title": "1999 NBA Finals",
+        "text": "\"series. Will Lyman narrated the season-ending documentary \"\"Go Spurs Go!\"\" for NBA Entertainment. The 1999 NBA season was shortened due to a labor dispute that led to a lockout, canceling the first 3 months of the season, technically making this the 1999 NBA season and Finals (as all games were played in the year 1999). The NBA schedule consisted of 50 regular season games (61% of regular 82 games), and a normal playoff schedule; many teams never played each other. This was the second year of t"
+      },
+      {
+        "title": "1981–82 Portland Trail Blazers season",
+        "text": "\"any other picks by the franchise who played at least one NBA game. 1981–82 Portland Trail Blazers season The 1981–82 season was the 12th season of the Portland Trail Blazers in the National Basketball Association (NBA). The Blazers finished 42–40, dropping three games more than in the previous season. Portland finished eighth in the Western Conference; as only six teams qualified in each conference for the 1982 NBA Playoffs, the Blazers did not participate in the postseason. This would be the o"
+      },
+      {
+        "title": "1981–82 Philadelphia 76ers season",
+        "text": "\"NBA Finals, the Sixers faced off against the Los Angeles Lakers in a rematch of the 1980 NBA Finals, where the Lakers won in six games. In the deciding 7th game, with under a minute and a Sixers victory well secured, the fans at the Boston Garden chanted \"\"Beat LA\"\" to the Sixers, one of pro basketballs most enduring moments, wanting the team to defeat the Lakers in the NBA Finals, as Celtics fans hated the Lakers. However, the Lakers would go on to win in the NBA Finals, defeating the Sixers i"
+      }
+    ]
+  },
+  {
+    "dataset": "nq_train",
+    "qid": "nq:c796ceefe8b9e3ae80ba",
+    "question": "when was oil first discovered in the us",
+    "answers": [
+      "1859"
+    ],
+    "removed_ids": [
+      "2800017#1",
+      "2408862#2",
+      "2682618#1",
+      "89483#3",
+      "2408862#0"
+    ],
+    "retained": [
+      {
+        "title": "Xerotine siccative",
+        "text": "\"Xerotine siccative Xerotine siccative was an oil drying agent used in the late 19th century. It is a type of terebene; unlike standard terebenes, xerotine siccative doesn't become cloudy when mixed in an oil. Replacing boiled oil, xerotine siccative was mixed with paint in order to speed up the drying process; however, its use ceased when it was discovered to be highly flammable. The dangerous qualities of xerotine siccative were first discovered in an investigation of a small explosion on in 1"
+      },
+      {
+        "title": "Xerotine siccative",
+        "text": "\"siccative was also considered as a potential cause of the explosion which sank USS Maine in Havana harbour; however, it was ruled out by a later investigation. Xerotine siccative Xerotine siccative was an oil drying agent used in the late 19th century. It is a type of terebene; unlike standard terebenes, xerotine siccative doesn't become cloudy when mixed in an oil. Replacing boiled oil, xerotine siccative was mixed with paint in order to speed up the drying process; however, its use ceased whe"
+      },
+      {
+        "title": "History of the petroleum industry in Canada (oil sands and heavy oil)",
+        "text": "\"can flow into a well bore to be produced. When heavy oil requires these techniques to go into production, it is known as non-conventional heavy oil. The first heavy oil discoveries came with the pursuit of conventional light and medium crude oil. Because much of western Canada's heavy oil is in pools close to the surface, early explorers using older rigs discovered many of those pools before they came upon the deeper light oil reservoirs. One of the first finds was in the Ribstone area near Wai"
+      }
+    ]
+  }
+]
