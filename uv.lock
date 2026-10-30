@@ -3487,8 +3487,18 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+features = [
+    { name = "huggingface-hub" },
+    { name = "safetensors" },
+    { name = "scipy" },
+    { name = "torch" },
+    { name = "transformers" },
+]
 gpu = [
+    { name = "huggingface-hub" },
     { name = "sae-lens" },
+    { name = "safetensors" },
+    { name = "scipy" },
     { name = "torch" },
     { name = "transformers" },
     { name = "vllm" },
@@ -3508,18 +3518,22 @@ dev = [
 requires-dist = [
     { name = "datasets", specifier = ">=3.0" },
     { name = "faiss-cpu", marker = "extra == 'retrieval'", specifier = ">=1.8" },
+    { name = "huggingface-hub", marker = "extra == 'features'", specifier = ">=0.25" },
     { name = "numpy", specifier = ">=1.26" },
     { name = "pandas", specifier = ">=2.2" },
     { name = "pyserini", marker = "extra == 'retrieval'", specifier = ">=0.44" },
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "sae-lens", marker = "extra == 'gpu'", specifier = ">=6.0" },
-    { name = "scikit-learn", specifier = ">=1.5" },
-    { name = "torch", marker = "extra == 'gpu'", specifier = ">=2.5" },
+    { name = "saerag", extras = ["features"], marker = "extra == 'gpu'" },
+    { name = "safetensors", marker = "extra == 'features'", specifier = ">=0.4" },
+    { name = "scikit-learn", specifier = ">=1.8" },
+    { name = "scipy", marker = "extra == 'features'", specifier = ">=1.13" },
+    { name = "torch", marker = "extra == 'features'", specifier = ">=2.5" },
     { name = "tqdm", specifier = ">=4.66" },
-    { name = "transformers", marker = "extra == 'gpu'", specifier = ">=4.50" },
+    { name = "transformers", marker = "extra == 'features'", specifier = ">=4.50" },
     { name = "vllm", marker = "extra == 'gpu'", specifier = ">=0.8" },
 ]
-provides-extras = ["retrieval", "gpu"]
+provides-extras = ["retrieval", "features", "gpu"]
 
 [package.metadata.requires-dev]
 dev = [

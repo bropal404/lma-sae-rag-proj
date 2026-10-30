@@ -6,8 +6,8 @@ __pycache__/
 .ruff_cache/
 
 # large artefacts live outside git (see README: shared data root)
-data/
-runs/
+/data/
+/runs/
 indexes/
 *.npy
 *.npz
