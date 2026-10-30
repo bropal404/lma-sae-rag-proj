@@ -49,6 +49,19 @@ What to check after step 2 (`data/features/gemma3-1b-it/stats_pilot.json`):
 
 Step 3 prints macro-F1 / AUROC / ECE per model and label budget. It writes `runs/probes/.../summary.csv`, top SAE features per class (look them up on Neuronpedia), and probe probabilities in `runs/routers/` for Person 4's metrics.
 
+## Quick start
+
+```bash
+bash scripts/local_pilot.sh        # laptop: Gemma 3 1B on CPU, about 40 min, plumbing check only
+
+# ADA: copy the code from your machine (the leading / keeps src/saerag/data/ in the copy)
+rsync -av --exclude .venv --exclude /data --exclude /runs ./ <user>@ada.iiit.ac.in:saerag-proj/
+# then on ADA, after accepting the Gemma 3 licence and `hf auth login`:
+cd saerag-proj && bash scripts/ada_run.sh pilot     # Gate 0, then `full` for everything
+```
+
+Keep `DATA_ROOT` on storage the compute nodes can see, and check your quota first.
+
 ## Tonight: IIIT GPU cluster (Persons 2 + 3)
 
 ```bash

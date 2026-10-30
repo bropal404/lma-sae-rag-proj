@@ -4,7 +4,6 @@
 # Set WIDE=1 if the 262k features were extracted.
 
 #SBATCH -J saerag-grid
-#SBATCH -A <your_account>
 #SBATCH -c 32
 #SBATCH --mem-per-cpu=3G
 #SBATCH --time=24:00:00

@@ -16,7 +16,6 @@
 # ask for 2 (3 if you also want 262k SAEs). On an A100/3090 node, 1 GPU and BACKEND=vllm.
 
 #SBATCH -J saerag-tonight
-#SBATCH -A <your_account>
 #SBATCH -c 16
 #SBATCH --gres=gpu:2
 #SBATCH --mem-per-cpu=3G
