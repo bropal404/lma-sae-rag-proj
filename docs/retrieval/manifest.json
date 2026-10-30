@@ -1,0 +1,90 @@
+{
+  "index": "/home2/nidhiv/saerag-person1/wiki-full/index",
+  "corpus_repo": "castorini/odqa-wiki-corpora",
+  "corpus_revision": "35162e5aeeb22daccfc19de4993e12bfe8b4d530",
+  "passage_count": 21015324,
+  "datasets": {
+    "nq_train": {
+      "questions": 4000,
+      "holes": 1209,
+      "gold_proxies_or_supporting": 3085,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 662,
+      "retrieval_seconds": 195.253
+    },
+    "nq_val": {
+      "questions": 500,
+      "holes": 154,
+      "gold_proxies_or_supporting": 378,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 87,
+      "retrieval_seconds": 14.827
+    },
+    "nq_test": {
+      "questions": 1000,
+      "holes": 309,
+      "gold_proxies_or_supporting": 806,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 136,
+      "retrieval_seconds": 29.188
+    },
+    "triviaqa_train": {
+      "questions": 4000,
+      "holes": 1214,
+      "gold_proxies_or_supporting": 3728,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 192,
+      "retrieval_seconds": 165.926
+    },
+    "triviaqa_val": {
+      "questions": 500,
+      "holes": 157,
+      "gold_proxies_or_supporting": 467,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 23,
+      "retrieval_seconds": 20.955
+    },
+    "triviaqa_test": {
+      "questions": 1000,
+      "holes": 283,
+      "gold_proxies_or_supporting": 927,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 53,
+      "retrieval_seconds": 39.596
+    },
+    "popqa_test": {
+      "questions": 1000,
+      "holes": 0,
+      "gold_proxies_or_supporting": 628,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 372,
+      "retrieval_seconds": 23.419
+    },
+    "hotpotqa_test": {
+      "questions": 1000,
+      "holes": 302,
+      "gold_proxies_or_supporting": 1000,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 0,
+      "retrieval_seconds": 36.739
+    },
+    "selfaware_test": {
+      "questions": 500,
+      "holes": 0,
+      "gold_proxies_or_supporting": 0,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 0,
+      "retrieval_seconds": 17.164
+    },
+    "pilot": {
+      "questions": 500,
+      "holes": 157,
+      "gold_proxies_or_supporting": 427,
+      "lexical_hole_leaks": 0,
+      "nonhole_without_gold_proxy": 54,
+      "retrieval_seconds": 17.61
+    }
+  },
+  "total_unique_dataset_questions": 13500,
+  "pilot_questions": 500
+}

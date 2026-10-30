@@ -1,76 +1,101 @@
 # TODO
 
-Tick items as you finish them and commit the change. The details behind each item are in [docs/PLAN.md](docs/PLAN.md) and [docs/DECISIONS.md](docs/DECISIONS.md).
+Move items from "To do" to "Done" as you finish them and commit the change. The details behind each item are in [docs/PLAN.md](docs/PLAN.md) and [docs/DECISIONS.md](docs/DECISIONS.md).
 
-## Done (shared groundwork)
-- [x] uv project, git, lockfile, tests (`uv run pytest`)
-- [x] Question splits for all datasets + 500-question pilot, with index-hole flags (`uv run python -m saerag.data.build`)
+**Status (2026-10-30):** the code for retrieval, generation, labels, features and probes is written, and full BM25 retrieval is finished. No generation, feature or probe job has been recorded as run with Gemma 3 4B yet, so there are no labels and no gate has been passed. The next step is the ADA pilot (Gate 0).
+
+## Done
+
+### Shared groundwork
+- [x] uv project, git, lockfile, tests (`uv run pytest`, 28 passing)
+- [x] Question splits for all datasets + 500-question pilot, with index-hole flags
 - [x] Shared contract: record formats (`schema.py`), answer matching (`answers.py`), label rule (`labels.py`), prompts (`prompts.py`), config
-- [x] Stubs with fixed inputs/outputs for every work stream
+- [x] One question set: Person 1's build is canonical (D13); `src/saerag/data/` is now tracked and reproduces the handoff byte for byte
+- [x] ADA scripts: `scripts/ada_run.sh` (`pilot` or `full`), `ada_tonight.sbatch`, `ada_grid.sbatch`, and `saerag.prefetch` for the model and SAEs
+- [x] Laptop plumbing check written: `scripts/local_pilot.sh` (Gemma 3 1B on CPU, not yet run)
 
-## Team (this week)
+### Person 1: retrieval
+- [x] Search tool interface (`retrieval/tool.py`), BM25 search (`retrieval/bm25.py`), hole filter and gold stand-in (`retrieval/holes.py`)
+- [x] Lucene index over the full 2018 Wikipedia passages (21,015,324 passages), kept at `/home2/nidhiv/saerag-person1/wiki-full/index` on ADA
+- [x] `retrieval/run.py`: top-100 per question, then hole filter or top-3, plus gold passages
+- [x] Pilot run and handover (`data/retrieval/{bm25,gold}/pilot.jsonl`)
+- [x] Hole statistics on the pilot: 157 of 500 hole questions, 1,800 passages removed, none left with fewer than 3 passages
+- [x] Full retrieval for all splits (13,500 questions), handed over in `artifacts/retrieval/`, validated by `scripts/retrieval/validate_person1_handoff.py` (no lexical hole leaks)
+
+### Person 2: generation and labels
+- [x] Answer matching, label rule and variant, prompts (tested)
+- [x] `generation/run.py` (vLLM or HF backend; not yet run on 4B)
+- [x] `generation/make_labels.py` (not yet run on 4B)
+- [x] `generation/report.py` (accuracy, class balance, time, gate; tested)
+
+### Person 3: activations, SAEs and probes
+- [x] Gemma Scope 2 covers Gemma 3 4B-IT (IT-model resid_post SAEs at layers 9/17/22/29, widths 16k–1M, CC-BY-4.0); settings are in `configs/default.yaml`
+- [x] `features/extract.py` (last-token and mean-pooled activations, SAE codes; not yet run on 4B)
+- [x] `probes/train.py` (logistic regression with L1 or L2, class-weighted, CV or held-out, label budgets; majority, quick TF-IDF, dense B7 and SAE probes; not yet run on 4B)
+- [x] `scripts/ada_grid.sbatch` (probe grid plus L1, binarised and mean-pooling ablations)
+- [x] `probes/analyze.py` (tested on synthetic data)
+
+### Person 4: baselines and metrics
+- [x] B1 always retrieve, B2 never retrieve, B3 oracle (`baselines/routers.py`)
+- [x] Routing outcome helper (`eval/metrics.py`)
+- [x] Metrics with unit tests on hand-made data (`eval/metrics.py`, `tests/test_metrics.py`): accuracy and selective accuracy, hallucination rate, retrieval-call rate and RETRIEVE precision/recall, abstention recall at 10% false refusal (threshold tuned on val), risk-coverage and AURC, macro-F1 and ECE, latency p50/p95 by stage
+- [x] One scoring script for every router and probe, split by all / hole / non-hole / dataset (`eval/score.py`)
+- [x] B8 question-text classifier, TF-IDF + LR with C tuned on val (`baselines/run.py --routers b8`)
+- [x] B4 verbalised router code and reply parsing (`baselines/run.py --routers b4`)
+- [x] 200-label hand-check sheet and protocol (`eval/handcheck.py`, [docs/HANDCHECK.md](docs/HANDCHECK.md))
+
+## To do
+
+### Next, in order
+1. [ ] Commit `scripts/ada_run.sh`, `scripts/local_pilot.sh` and the README and sbatch edits
+2. [ ] Accept the Gemma 3 licence on HF and run `hf auth login` on ADA (the model is gated)
+3. [ ] Copy the code to ADA and run `bash scripts/ada_run.sh pilot`
+4. [ ] Read the Gate 0 report; if a class is under 15%, change `hole_fraction` or the dataset mix before the full run
+5. [ ] Run `bash scripts/ada_run.sh full`
+
+### Team
 - [ ] Fill in owner names in `docs/PLAN.md`
 - [ ] H3 framing: the probe cannot see index holes (D3 caveat). Agree to report hole and non-hole questions separately?
-- [ ] Gold condition for NQ/TriviaQA: answer-bearing BM25 passage as a stand-in, or DPR's gold files (D10)
-- [ ] Shared storage for `data/` and the Pyserini cache (D11)
-- [ ] Assign B5, B6 and B9 at the end of week 1
+- [ ] Gold condition for NQ/TriviaQA (D10): the handoff uses the answer-bearing BM25 passage as a stand-in. Keep it, or move to DPR's gold files? Note that 372 of 1,000 PopQA questions have no stand-in
+- [ ] Shared storage for `data/` (D11). The index is on ADA under Person 1's home directory, and nothing else is agreed
+- [ ] Assign B5, B6 and B9
+- [ ] Merge into `main`: it still has only the scaffold, and all the work above is on `nidhi` and `gopal`
+- [ ] Fix the README's "Tonight" section: it says to edit `#SBATCH -A`, but that line is gone from the scripts (`ACCOUNT=` in `ada_run.sh` replaces it)
 
-## Person 1: retrieval
-- [x] Search tool interface (`retrieval/tool.py`)
-- [x] BM25 search, first version (`retrieval/bm25.py`, not yet run)
-- [x] Index-hole filter and gold stand-in (`retrieval/holes.py`, tested)
-- [ ] `uv sync --extra retrieval`; download the prebuilt index (~10 GB); check the passage title/text format in `bm25.py`
-- [ ] Write `retrieval/run.py`: top-100 per question, then hole filter or top-3, plus gold passages and latency
-- [ ] Run on the pilot; hand over `data/retrieval/{bm25,gold}/pilot.jsonl`
-- [ ] Report hole statistics (passages removed, hole questions left with fewer than 3 passages)
-- [ ] Full retrieval for all splits
+### Person 1: retrieval
+- [ ] Review the sampled hole passages by hand (`docs/retrieval/hole_review_samples.json`) before any final claim
+- [ ] Measure per-question BM25 latency: the batch run leaves it unset on purpose, and Gate 3 needs it
 - [ ] Week 3: dense retriever (e5-base-v2 over a 2M-passage subsample, FAISS) for the retriever-shift test
 
-## Person 2: generation and labels
-- [x] Answer matching, label rule and variant, prompts (tested)
-- [ ] `uv sync --extra gpu` on the GPU node; get Gemma 3 4B-IT running in vLLM
-- [ ] Write `generation/run.py`; run the closed-book condition on the pilot (needs no retrieval)
-- [ ] Run the BM25 and gold conditions on the pilot once Person 1's retrieval is ready
-- [ ] Write `generation/make_labels.py`
+### Person 2: generation and labels
+- [ ] Get Gemma 3 4B-IT running on ADA (`hf` backend by default; vLLM needs a bf16 GPU)
+- [ ] Run the closed-book, BM25 and gold conditions on the pilot
 - [ ] Report pilot class balance (gate: each class ≥ 15%), accuracy per condition, time per 1,000 questions
-- [ ] Full generations and labels for all splits (waits on Person 3 confirming the model)
+- [ ] Full generations and labels for all splits
 - [ ] Week 3: dense-retriever condition
 
-## Person 3: activations, SAEs and probes
-- [ ] **Day 1–2, blocks everyone:** confirm Gemma Scope 2 covers Gemma 3 4B-IT (residual-stream SAEs, about 6 layers, 2 widths, loads in sae-lens, licence OK)
-- [ ] Fill in `model.sae_release`, `sae_widths` and `layers` in `configs/default.yaml`, or switch to the fallback model
-- [ ] Write `features/extract.py` (last-token and mean-pooled activations, SAE codes); run on the pilot and record the time
-- [ ] Write `probes/train.py` (logistic regression with L1 and L2, class-weighted); test the plumbing on pilot labels
+### Person 3: activations, SAEs and probes
+- [ ] Run `features/extract.py` on the pilot and record the time; check SAE L0 and FVU in `stats_pilot.json`
+- [ ] MVP: probes on the proxy label (closed-book correct)
 - [ ] Extract features for all splits
 - [ ] Probe grid: layers × widths × label budgets (50 to 5,000) × seeds, SAE and dense (B7)
 - [ ] Feature analysis: top features per class, check 30 examples by hand, drop top-k features and measure the fall in F1
 
-## Person 4: baselines, metrics and hand check
-- [x] B1 always retrieve, B2 never retrieve, B3 oracle (`baselines/routers.py`)
-- [x] Routing outcome helper (`eval/metrics.py`)
-- [x] Metrics with unit tests on hand-made data (`eval/metrics.py`, `tests/test_metrics.py`):
-  - [x] accuracy and selective accuracy
-  - [x] hallucination rate (index-hole questions reported separately)
-  - [x] retrieval-call rate, and precision/recall of the RETRIEVE decision
-  - [x] abstention recall at 10% false refusal (threshold tuned on val)
-  - [x] risk-coverage curve and AURC
-  - [x] macro-F1 and calibration error
-  - [x] latency p50 and p95, split by stage
-- [x] One scoring script for every router and probe, split by all / hole / non-hole / dataset (`eval/score.py`)
-- [ ] B4 verbalised router on the pilot (code and output parsing done in `baselines/run.py`; run on the GPU node once Person 2's vLLM setup works)
-- [x] B8 question-text classifier, TF-IDF + logistic regression (`baselines/run.py --routers b8`; run once labels exist)
-- [x] 200-label hand-check sheet and protocol (`eval/handcheck.py`, [docs/HANDCHECK.md](docs/HANDCHECK.md))
+### Person 4: baselines, metrics and hand check
+- [ ] Run B4 on the pilot (GPU, vLLM): `python -m saerag.baselines.run --routers b4 --files pilot`
+- [ ] Run B1-B3 and B8 on real labels, then `python -m saerag.eval.score` over every router and probe
 - [ ] Run the hand check (gate: label error < 10%)
+- [ ] Batch-size-1 latency for every method (Gate 3); generation latency is currently a batch average
 
-## Gates
-- [ ] Gate 0 (end of week 1): each class ≥ 15% of pilot labels, SAE confirmed, compute re-measured
+### Gates
+- [ ] Gate 0 (end of week 1): each class ≥ 15% of pilot labels, compute re-measured (SAE already confirmed)
 - [ ] Gate 1 (week 2): label error < 10% on the hand check
 - [ ] Gate 2 (week 3): a router cuts retrieval calls versus B1 with at most 2 points of accuracy loss
 - [ ] Gate 3 (week 4): latency measured for every method
 
-## Not assigned yet
+### Not assigned yet
 - [ ] B5 generation-time trigger (FLARE/DRAGIN-style)
 - [ ] B6 sampled-uncertainty trigger (SEAKR-style, 1,000-question subset)
 - [ ] B9 QLoRA self-router
 - [ ] B10 post-retrieval refusal (optional)
-- [ ] Ablations, failure analysis, write-up (weeks 4–5)
+- [ ] Ablations beyond the grid job, failure analysis, write-up (weeks 4–5)

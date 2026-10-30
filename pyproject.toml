@@ -14,7 +14,7 @@ dependencies = [
     "numpy>=1.26",
     "pandas>=2.2",
     "pyyaml>=6.0",
-    "scikit-learn>=1.5",
+    "scikit-learn>=1.8",
     "tqdm>=4.66",
 ]
 
@@ -24,10 +24,17 @@ retrieval = [
     "pyserini>=0.44",
     "faiss-cpu>=1.8",
 ]
-# Generation, activations and SAEs. Install on the GPU node only.
-gpu = [
+# Activations, SAE codes and HF generation (Person 3). Runs on CPU for the 1B smoke test.
+features = [
     "torch>=2.5",
     "transformers>=4.50",
+    "safetensors>=0.4",
+    "huggingface-hub>=0.25",
+    "scipy>=1.13",
+]
+# Everything for the GPU node, including vLLM for the labelling runs.
+gpu = [
+    "saerag[features]",
     "vllm>=0.8",
     "sae-lens>=6.0",
 ]
