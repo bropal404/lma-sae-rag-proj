@@ -17,6 +17,7 @@ If you change a decision, edit this file and `configs/default.yaml` in the same 
 | D10 | Gold condition: HotpotQA gold paragraphs; others = top answer-bearing BM25 passage | Team |
 | D11 | Large data lives outside git under `SAERAG_DATA` | Team (where?) |
 | D12 | Dense retriever for the shift test: e5-base-v2 over a 2M subsample, FAISS flat | Decided, week 3 |
+| D13 | Person 1's question build is canonical | Decided |
 
 ## D1. Model and SAE
 The labels depend on the generator, so **every full labelling run waits on this decision**. The pilot can start on Gemma 3 4B-IT right away.
@@ -56,6 +57,9 @@ Known risk: PopQA has very short aliases (e.g. "AR", "PL"). Watch for them in th
 ## D10. Gold condition (team)
 NQ and TQA have no gold passage ids in the DPR corpus without DPR's own preprocessed files. The proposed proxy is the highest-ranked BM25 top-100 passage that contains the answer. If there is none, `gold_correct = None` and the abstain reason is `beyond_model`.
 The alternative is DPR's `positive_ctxs` files. They are more faithful but cover only part of our sample and need a mapping.
+
+## D13. Canonical questions
+`.gitignore` used to hide `src/saerag/data/`, so Person 1 wrote their own `data/build.py`. Its splits share almost no qids with the first build, and its hole hash differs. All retrieval output is keyed to Person 1's files, so that build is canonical. It also has no duplicate TriviaQA questions. `uv run python -m saerag.data.build` reproduces the handoff's question files byte for byte. `generation.run` now refuses retrieval whose qids or hole flags disagree with the question file.
 
 ## D11. Shared storage (team)
 Where do `data/` and the Pyserini cache live so everyone reads the same labels? A shared cluster directory is preferred, with a Drive mirror for files under 1 GB.

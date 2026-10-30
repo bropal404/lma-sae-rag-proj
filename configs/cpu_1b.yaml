@@ -1,0 +1,16 @@
+# Local CPU smoke test: Gemma 3 1B-IT (ungated mirror) + Gemma Scope 2 1B-IT SAEs.
+# Same code path as the 4B run; numbers are not for the report.
+extends: default.yaml
+
+model:
+  generator: unsloth/gemma-3-1b-it
+  tag: gemma3-1b-it
+  sae_repo: google/gemma-scope-2-1b-it
+  sae_site: resid_post
+  sae_l0: medium
+  sae_widths: [16k]
+  sae_layers: [7, 13, 17, 22]
+  dense_layers: [7, 13, 17, 22]
+
+generation:
+  batch_size: 8

@@ -7,6 +7,7 @@ Tick items as you finish them and commit the change. The details behind each ite
 - [x] Question splits for all datasets + 500-question pilot, with index-hole flags (`uv run python -m saerag.data.build`)
 - [x] Shared contract: record formats (`schema.py`), answer matching (`answers.py`), label rule (`labels.py`), prompts (`prompts.py`), config
 - [x] Stubs with fixed inputs/outputs for every work stream
+- [x] One question set: Person 1's build is canonical (D13); `src/saerag/data/` is now tracked
 
 ## Team (this week)
 - [ ] Fill in owner names in `docs/PLAN.md`
@@ -29,19 +30,25 @@ Tick items as you finish them and commit the change. The details behind each ite
 ## Person 2: generation and labels
 - [x] Answer matching, label rule and variant, prompts (tested)
 - [ ] `uv sync --extra gpu` on the GPU node; get Gemma 3 4B-IT running in vLLM
-- [ ] Write `generation/run.py`; run the closed-book condition on the pilot (needs no retrieval)
+- [x] Write `generation/run.py` (vLLM or HF backend; not yet run)
+- [ ] Run the closed-book condition on the pilot (needs no retrieval)
 - [ ] Run the BM25 and gold conditions on the pilot once Person 1's retrieval is ready
-- [ ] Write `generation/make_labels.py`
+- [x] Write `generation/make_labels.py` (not yet run)
+- [x] Write `generation/report.py` (accuracy, class balance, time, gate; tested)
 - [ ] Report pilot class balance (gate: each class ≥ 15%), accuracy per condition, time per 1,000 questions
 - [ ] Full generations and labels for all splits (waits on Person 3 confirming the model)
 - [ ] Week 3: dense-retriever condition
 
 ## Person 3: activations, SAEs and probes
-- [ ] **Day 1–2, blocks everyone:** confirm Gemma Scope 2 covers Gemma 3 4B-IT (residual-stream SAEs, about 6 layers, 2 widths, loads in sae-lens, licence OK)
-- [ ] Fill in `model.sae_release`, `sae_widths` and `layers` in `configs/default.yaml`, or switch to the fallback model
-- [ ] Write `features/extract.py` (last-token and mean-pooled activations, SAE codes); run on the pilot and record the time
-- [ ] Write `probes/train.py` (logistic regression with L1 and L2, class-weighted); test the plumbing on pilot labels
+- [x] **Day 1–2, blocks everyone:** confirm Gemma Scope 2 covers Gemma 3 4B-IT (IT-model resid_post SAEs at layers 9/17/22/29, widths 16k–1M, CC-BY-4.0)
+- [x] Fill in the SAE settings in `configs/default.yaml`
+- [ ] Accept the Gemma 3 licence on HF (the model is gated)
+- [x] Write `features/extract.py` (last-token and mean-pooled activations, SAE codes; not yet run)
+- [ ] Run it on the pilot and record the time
+- [x] Write `probes/train.py` (logistic regression with L1 or L2, class-weighted, CV or held-out, label budgets; not yet run)
+- [ ] MVP: probes on the proxy label (closed-book correct) via `scripts/ada_tonight.sbatch`
 - [ ] Extract features for all splits
+- [x] Write the grid job (`scripts/ada_grid.sbatch`) and `probes/analyze.py` (tested on synthetic data)
 - [ ] Probe grid: layers × widths × label budgets (50 to 5,000) × seeds, SAE and dense (B7)
 - [ ] Feature analysis: top features per class, check 30 examples by hand, drop top-k features and measure the fall in F1
 
