@@ -7,7 +7,7 @@ Owners follow Manya's split. Fill in names. Weeks follow the proposal's timeline
 | 1 | _ | BM25 index, search tool, index holes, gold condition, later the dense retriever | `retrieval/` |
 | 2 | _ | Generation (closed / BM25 / gold), answer matching, labels | `generation/`, `answers.py`, `labels.py`, `prompts.py` |
 | 3 | _ | SAE coverage check, activations + SAE codes, SAE and dense probes | `features/`, `probes/` |
-| 4 | _ | B1–B4, B8, metrics, 200-label hand check | `baselines/`, `eval/` |
+| 4 | Salvik | B1–B4, B8, metrics, 200-label hand check | `baselines/`, `eval/` |
 
 ## Critical path
 

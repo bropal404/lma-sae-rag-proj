@@ -48,17 +48,18 @@ Tick items as you finish them and commit the change. The details behind each ite
 ## Person 4: baselines, metrics and hand check
 - [x] B1 always retrieve, B2 never retrieve, B3 oracle (`baselines/routers.py`)
 - [x] Routing outcome helper (`eval/metrics.py`)
-- [ ] Metrics with unit tests on hand-made data:
-  - [ ] accuracy and selective accuracy
-  - [ ] hallucination rate (index-hole questions reported separately)
-  - [ ] retrieval-call rate, and precision/recall of the RETRIEVE decision
-  - [ ] abstention recall at 10% false refusal (threshold tuned on val)
-  - [ ] risk-coverage curve and AURC
-  - [ ] macro-F1 and calibration error
-  - [ ] latency p50 and p95, split by stage
-- [ ] B4 verbalised router on the pilot (reuses Person 2's vLLM setup)
-- [ ] B8 question-text classifier (TF-IDF + logistic regression first)
-- [ ] 200-label hand-check sheet and protocol (watch the short PopQA aliases like "AR" and "PL")
+- [x] Metrics with unit tests on hand-made data (`eval/metrics.py`, `tests/test_metrics.py`):
+  - [x] accuracy and selective accuracy
+  - [x] hallucination rate (index-hole questions reported separately)
+  - [x] retrieval-call rate, and precision/recall of the RETRIEVE decision
+  - [x] abstention recall at 10% false refusal (threshold tuned on val)
+  - [x] risk-coverage curve and AURC
+  - [x] macro-F1 and calibration error
+  - [x] latency p50 and p95, split by stage
+- [x] One scoring script for every router and probe, split by all / hole / non-hole / dataset (`eval/score.py`)
+- [ ] B4 verbalised router on the pilot (code and output parsing done in `baselines/run.py`; run on the GPU node once Person 2's vLLM setup works)
+- [x] B8 question-text classifier, TF-IDF + logistic regression (`baselines/run.py --routers b8`; run once labels exist)
+- [x] 200-label hand-check sheet and protocol (`eval/handcheck.py`, [docs/HANDCHECK.md](docs/HANDCHECK.md))
 - [ ] Run the hand check (gate: label error < 10%)
 
 ## Gates
