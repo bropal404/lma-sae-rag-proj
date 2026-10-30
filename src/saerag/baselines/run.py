@@ -4,6 +4,7 @@
     uv run python -m saerag.baselines.run --routers b8 --files nq_test triviaqa_test \
         --train-files nq_train triviaqa_train --val-files nq_val triviaqa_val
     uv run python -m saerag.baselines.run --routers b4 --files pilot      # GPU node, vLLM
+    uv run python -m saerag.baselines.run --routers b4 --files pilot --backend hf   # Kaggle
 
 Reads data/questions/{file}.jsonl and data/labels/{variant}/{file}.jsonl and writes
     runs/routers/{router_id}/probs_{file}.jsonl   {"qid", "p": {...}, "latency_ms"?}
@@ -50,18 +51,29 @@ def _texts_and_labels(cfg, files: list[str], variant: str):
     return qs, ys
 
 
-def run_b4(cfg, files: list[str]) -> None:
-    from vllm import LLM, SamplingParams  # GPU extra only
+def run_b4(cfg, files: list[str], backend: str | None = None) -> None:
+    """Reuses Person 2's generation backends, so B4 sees the same model setup as the labels."""
+    from ..generation.run import generate_hf, generate_vllm
+    from ..hf import first_line
 
-    llm = LLM(cfg["model"]["generator"], seed=cfg["seed"])
-    params = SamplingParams(temperature=0.0, max_tokens=8)
+    g = {**cfg["generation"], "max_new_tokens": 8}  # one word is enough
+    name, backend = cfg["model"]["generator"], backend or cfg["generation"]["backend"]
+    if backend == "hf":
+        from ..hf import load_model
+        tok, model, in_device = load_model(name, g.get("dtype", "auto"))
+    else:
+        from transformers import AutoTokenizer
+        tok = AutoTokenizer.from_pretrained(name)
     rid = ROUTER_IDS["b4"]
     for f in files:
         qs = load_questions(cfg, f)
+        prompts = [tok.apply_chat_template(verbalised_router_messages(q.question), tokenize=False,
+                                           add_generation_prompt=True) for q in qs]
         t0 = time.perf_counter()
-        res = llm.chat([verbalised_router_messages(q.question) for q in qs], params)
+        texts = (generate_vllm(name, tok, prompts, g) if backend == "vllm"
+                 else generate_hf(model, tok, in_device, prompts, g))
         per_q_ms = (time.perf_counter() - t0) * 1000 / max(len(qs), 1)  # batched; not the p50
-        outputs = {q.qid: r.outputs[0].text for q, r in zip(qs, res, strict=True)}
+        outputs = {q.qid: first_line(t) for q, t in zip(qs, texts, strict=True)}
         probs, fail = routers.verbalised(outputs)
         write_jsonl(path(cfg, "results", "routers", rid, f"raw_{f}.jsonl"),
                     [{"qid": q, "output": o} for q, o in outputs.items()])
@@ -76,6 +88,7 @@ def main() -> None:
     ap.add_argument("--routers", nargs="+", choices=list(ROUTER_IDS), required=True)
     ap.add_argument("--files", nargs="+", required=True)
     ap.add_argument("--variant", default="default")
+    ap.add_argument("--backend", choices=["vllm", "hf"], help="B4 only; default from config")
     ap.add_argument("--train-files", nargs="+", default=["nq_train", "triviaqa_train"])
     ap.add_argument("--val-files", nargs="+", default=["nq_val", "triviaqa_val"])
     args = ap.parse_args()
@@ -84,7 +97,7 @@ def main() -> None:
     for r in args.routers:
         rid = ROUTER_IDS[r]
         if r == "b4":
-            run_b4(cfg, args.files)
+            run_b4(cfg, args.files, args.backend)
             continue
         if r == "b8":
             tq, ty = _texts_and_labels(cfg, args.train_files, args.variant)
