@@ -38,6 +38,11 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 ### Person 4: baselines and metrics
 - [x] B1 always retrieve, B2 never retrieve, B3 oracle (`baselines/routers.py`)
 - [x] Routing outcome helper (`eval/metrics.py`)
+- [x] Metrics with unit tests on hand-made data (`eval/metrics.py`, `tests/test_metrics.py`): accuracy and selective accuracy, hallucination rate, retrieval-call rate and RETRIEVE precision/recall, abstention recall at 10% false refusal (threshold tuned on val), risk-coverage and AURC, macro-F1 and ECE, latency p50/p95 by stage
+- [x] One scoring script for every router and probe, split by all / hole / non-hole / dataset (`eval/score.py`)
+- [x] B8 question-text classifier, TF-IDF + LR with C tuned on val (`baselines/run.py --routers b8`)
+- [x] B4 verbalised router code and reply parsing (`baselines/run.py --routers b4`)
+- [x] 200-label hand-check sheet and protocol (`eval/handcheck.py`, [docs/HANDCHECK.md](docs/HANDCHECK.md))
 
 ## To do
 
@@ -77,18 +82,10 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 - [ ] Feature analysis: top features per class, check 30 examples by hand, drop top-k features and measure the fall in F1
 
 ### Person 4: baselines, metrics and hand check
-- [ ] Metrics with unit tests on hand-made data (`eval/metrics.py`):
-  - [ ] accuracy and selective accuracy
-  - [ ] hallucination rate (index-hole questions reported separately)
-  - [ ] retrieval-call rate, and precision/recall of the RETRIEVE decision
-  - [ ] abstention recall at 10% false refusal (threshold tuned on val)
-  - [ ] risk-coverage curve and AURC
-  - [ ] macro-F1 and calibration error
-  - [ ] latency p50 and p95, split by stage
-- [ ] B4 verbalised router on the pilot (reuses Person 2's setup)
-- [ ] B8 question-text classifier: full version (`probes/train.py` has only a quick TF-IDF one)
-- [ ] 200-label hand-check sheet and protocol (watch the short PopQA aliases like "AR" and "PL")
+- [ ] Run B4 on the pilot (GPU, vLLM): `python -m saerag.baselines.run --routers b4 --files pilot`
+- [ ] Run B1-B3 and B8 on real labels, then `python -m saerag.eval.score` over every router and probe
 - [ ] Run the hand check (gate: label error < 10%)
+- [ ] Batch-size-1 latency for every method (Gate 3); generation latency is currently a batch average
 
 ### Gates
 - [ ] Gate 0 (end of week 1): each class ≥ 15% of pilot labels, compute re-measured (SAE already confirmed)
