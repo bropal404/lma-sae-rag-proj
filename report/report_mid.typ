@@ -184,7 +184,7 @@ The variant `miss_as_retrieve` gives RETRIEVE to questions that only the gold ru
 
 The first probe run predicts a two-way label: ANSWER if the closed-book answer is correct, otherwise NOT_ANSWER. It used a Kaggle notebook on a new Hugging Face sample of 2,000 train, 400 val, 600 test and 300 PopQA questions.
 
-All probes are class-weighted logistic regression, with C from {0.001, 0.01, 0.1, 1, 10} chosen by 3-fold CV on macro-F1. Dense features use `StandardScaler` and SAE features use `MaxAbsScaler`. The text baseline is TF-IDF on 1- and 2-grams. Layers 9, 17, 22 and 29 were compared on validation. Intervals are 95% bootstrap with 1,000 resamples. For the label budgets we trained on 50 to 1,000 labels with five seeds each.
+All probes are class-weighted logistic regression, with C from {0.001, 0.01, 0.1, 1, 10} chosen by 3-fold CV on macro-F1. Dense features use `StandardScaler` and SAE features use `MaxAbsScaler`. The text baseline is TF-IDF on 1- and 2-grams. Layers 9, 17, 22 and 29 were compared on validation. Intervals are 95% bootstrap with 1,000 resamples. For the label budgets we trained on 50 to 1,000 labels and averaged over seeds.
 
 == 3.5 Evaluation code
 
@@ -201,32 +201,8 @@ SEAKR reads uncertainty from the middle layer #c(10) and CtrlA finds intermediat
 Evidence on SAE versus dense probes is mixed. Gallifant et al. report SAE features beating hidden-state baselines, with transfer across model sizes #c(4). Kantamneni et al. find SAE probes do not consistently beat strong baselines under scarcity, imbalance, noise or shift #c(3).
 
 = 5. Code Status
+The code is currently in the `mid-eval` branch, where all 45 tests are passing. The data module, including splits and hole flags, is complete, while retrieval (BM25, hole filtering, and the gold proxy) has been run across all splits. Generation runs, labels, and gate reports have been completed on the 4B model, and feature extraction (activations and SAE codes) has been run on a sample. Probe training and analysis are currently limited to the two-way setup, while baselines (B1–B4 and B8) and evaluation metrics have only been tested on the 1B demo. The ADA jobs and probe grid scripts are yet to be run. In terms of runtime, closed-book generation takes approximately 140 seconds per 1,000 questions, while BM25 takes around 1,250 seconds, both measured on 2×T4 GPUs.
 
-#figure(
-  table(
-    columns: (auto, 1fr, auto),
-    stroke: none,
-    inset: (x: 3pt, y: 3.4pt),
-    align: (left, left, left),
-    table.hline(stroke: 0.6pt + ink),
-    [Module], [Contents], [State],
-    table.hline(stroke: 0.4pt + rule),
-    [`data/`], [Splits, hole flags], [Complete],
-    [`retrieval/`], [BM25, hole filter, gold proxy], [Run, all splits],
-    [`generation/`], [Runs, labels, gate report], [Run on 4B],
-    [`features/`], [Activations, SAE codes], [Run on sample],
-    [`probes/`], [Training, analysis], [Two-way only],
-    [`baselines/`], [B1–B4, B8], [1B demo only],
-    [`eval/`], [Metrics, scoring, hand check], [1B demo only],
-    [`scripts/`], [ADA jobs, probe grid], [Not run],
-    table.hline(stroke: 0.6pt + ink),
-  ),
-  kind: table,
-  supplement: none,
-  numbering: none,
-)
-
-The code is merged on branch `p4-eval`, where all 45 tests pass. Closed-book generation took about 140 s per 1,000 questions and BM25 about 1,250 s, on 2×T4.
 
 = 6. Preliminary Results
 
@@ -270,16 +246,11 @@ The SAE probe is 3.9 points below dense on test and 2.5 below on PopQA. Both gap
 
 == 6.5 Label efficiency
 
-The SAE probe does not beat dense at any budget (Fig. 7). At 50 labels it is about 0.66 against 0.68, and at 200 about 0.67 against 0.71. At 1,000 they are level. On this label, H2 is not supported so far.
+The SAE probe does not beat dense at any budget. At 50 labels it is about 0.66 against 0.68, and at 200 about 0.67 against 0.71. At 1,000 they are level. On this label, H2 is not supported so far.
 
 *Unexplained result.* SAE reaches about 0.71 on 1,000-label subsamples but 0.673 on all 2,000 labels. Dense stays flat. We do not know why yet. Until we do, the 3.9-point gap in Section 6.4 may be wrong.
 
 We have the top-weighted SAE features at layer 17, but nobody has reviewed them yet.
-
-#figure(
-  image("figs/12_label_efficiency.pdf", width: 88%),
-  caption: [Test macro-F1 against training labels, mean of five seeds.],
-)
 
 == 6.6 End-to-end demo on Gemma 3 1B
 
