@@ -1,4 +1,4 @@
-// Compile from this folder: typst compile report_mid.typst report_mid.pdf
+// Compile from this folder: typst compile report_mid.typst report_mid.png
 
 #let ink = luma(30)
 #let muted = luma(105)
@@ -16,7 +16,7 @@
 #set page(paper: "a4", margin: (x: 1.6cm, y: 1.7cm), columns: 2, numbering: none, header: none, footer: none)
 #set columns(gutter: 0.65cm)
 #set text(font: "Libertinus Serif", size: 10pt, fill: ink, lang: "en")
-#set par(justify: true, leading: 0.58em, spacing: 0.8em)
+#set par(justify: true, leading: 0.55em, spacing: 0.7em)
 #set list(indent: 0.2em, body-indent: 0.5em, spacing: 0.55em, marker: text(fill: accent)[•])
 #set enum(indent: 0.1em, body-indent: 0.5em, spacing: 0.55em)
 
@@ -45,22 +45,18 @@
     font: sans,
     size: 11.5pt,
     fill: accent,
-  )[Deciding to answer, retrieve or abstain before generation · Mid-evaluation report]
+  )[Deciding to answer, retrieve or abstain before generation Mid-evaluation report]
   #v(0.15em)
   #text(font: sans, size: 8.8pt, fill: muted)[
-    Gopal Kataria (2023112006) · Nidhi Vaidya (2023114005) · Manya Jain (2024102068) · Salvik Krishna (2023113015)
+    Gopal Kataria (2023112006); Manya Jain (2024102068); Nidhi Vaidya (2023114005); Salvik Krishna (2023113015)
   ]
+  #v(0.1em)
+  #text(font: sans, size: 8.8pt)[Repository: #link("https://github.com/bropal404/lma-sae-rag-proj")[github.com/bropal404/lma-sae-rag-proj]]
 
 ]
 #text(font: sans, weight: "semibold")[Current status]
 
-*Completed:* BM25 retrieval for all 13,500 questions; Gemma 3 4B generations and labels on the benchmark splits; a two-way probe run on a separate sample; metrics, baselines and scoring code; a 40-question end-to-end demo on Gemma 3 1B.
-
-*Preliminary:* on the two-way label, test macro-F1 is 0.71 for the dense probe, 0.67 for the SAE probe, 0.63 for question text and 0.40 for majority.
-
-*Unexpected:* the default label rule fails Gate 0, and the SAE probe scores lower on 2,000 labels than on 1,000. We have not explained the second result yet.
-
-*Pending:* three-way probes on 4B, routing results, latency, the label hand check, and the full probe grid.
+BM25 retrieval is complete for all 13,500 questions, and Gemma 3 4B generations and labels exist for the benchmark splits. A two-way probe run on a separate sample is done, and the metrics, baselines and scoring code are written. A 40-question end-to-end demo has run on Gemma 3 1B. On the two-way label, test macro-F1 is 0.71 for the dense probe, 0.67 for the SAE probe, 0.63 for question text and 0.40 for majority. The default label rule fails Gate 0, and the SAE probe scores lower on 2,000 labels than on 1,000; we have not explained the second result yet. Three-way probes on 4B, routing results, latency, the label hand check and the full probe grid are still pending.
 
 = 1. Problem Statement
 
@@ -77,7 +73,7 @@ The proposal's hypotheses are:
 
 = 2. Sparse Autoencoders
 
-An SAE maps an activation $x$ to a much wider vector with few non-zero entries, then reconstructs $x$ from it (Fig. 1). Each entry is a feature. Features are often easier to interpret than raw activation dimensions #c(1).
+A sparse autoencoder (SAE) takes an activation $x$ from the model's residual stream and maps it to a much wider vector in which only a small number of entries are non-zero. It then reconstructs the original $x$ from this sparse vector, as shown in Fig. 1. Each entry of the wide vector is called a feature, and a feature is active only when it contributes to the reconstruction of a particular input. Because so few features fire for any given input, and each one tends to respond to a more specific pattern, they are often easier to interpret than the individual dimensions of the raw activation, which usually mix many unrelated concepts together #c(1).
 
 #figure(
   image("figs/sae.webp", width: 58%),
@@ -156,9 +152,9 @@ The question goes through the model once, using the closed-book prompt with the 
 
 == 3.2 Data and retrieval
 
-Questions come from NQ-open and TriviaQA (4,000 train, 500 val, 1,000 test each), long-tail PopQA (1,000), HotpotQA (1,000) and Self-Aware unanswerable questions (500), with seed 13. The pilot is 250 NQ and 250 TriviaQA questions taken from train.
+Questions come from NQ-open (#link("https://huggingface.co/datasets/google-research-datasets/nq_open")[Hugging Face]) and TriviaQA (#link("https://huggingface.co/datasets/mandarjoshi/trivia_qa")[Hugging Face], `rc.nocontext`), with 4,000 train, 500 val and 1,000 test questions each. Long-tail PopQA (#link("https://huggingface.co/datasets/akariasai/PopQA")[Hugging Face], 1,000 questions with popularity below 100) and HotpotQA distractor validation (#link("https://huggingface.co/datasets/hotpotqa/hotpot_qa")[Hugging Face], 1,000 questions) are the out-of-distribution sets. Self-Aware unanswerable questions (#link("https://github.com/yinzhangyue/SelfAware")[GitHub], 500 of 1,032) are the abstention slice. Sampling uses seed 13. The pilot is 250 NQ and 250 TriviaQA questions taken from train.
 
-Retrieval is BM25 on a Lucene index of the 2018 Wikipedia DPR passages (21,015,324 passages of 100 words). We fetch the top 100 and keep the top 3.
+Retrieval is BM25 on a Lucene index of the 2018 Wikipedia DPR passages (#link("https://huggingface.co/datasets/castorini/odqa-wiki-corpora")[castorini/odqa-wiki-corpora], 21,015,324 passages of 100 words). We fetch the top 100 and keep the top 3.
 
 About 30% of NQ, TriviaQA and HotpotQA questions are flagged as index holes #c(15). For these, passages containing an answer alias, or HotpotQA's supporting titles, are removed from the top 100 at query time. On the pilot this removed 1,800 passages from 157 questions, and all of them still had 3 passages left.
 
@@ -213,7 +209,7 @@ Sections 6.1 to 6.3 use the canonical splits on 4B. Sections 6.4 and 6.5 use the
 Fig. 3 shows accuracy relative to closed-book. On the test splits, BM25 adds 0.9 points on NQ and 0.3 on TriviaQA. It adds 16.9 on PopQA and 2.9 on HotpotQA. These numbers include hole questions. The gold run adds 33 to 53 points.
 
 #figure(
-  image("figs/03_bm25_gain_vs_headroom.pdf", width: 100%),
+  image("figs/03_bm25_gain_vs_headroom.png", width: 100%),
   caption: [Accuracy change from closed-book for BM25 and gold passages.],
 )
 
@@ -221,11 +217,11 @@ Fig. 3 shows accuracy relative to closed-book. On the test splits, BM25 adds 0.9
 
 On hole questions, BM25 accuracy is below closed-book on every split (Fig. 4): 52% to 16% on TriviaQA test, 20% to 5% on NQ test, and 20% to 12% on HotpotQA. The filter removes answer text by design, so some drop is expected. On TriviaQA the model gets about half of these right with no passages, and most of those answers are lost once it sees unrelated text.
 
-#figure(image("figs/02_hole_accuracy.pdf", width: 100%), caption: [Accuracy on index-hole questions.])
+#figure(image("figs/02_hole_accuracy.png", width: 100%), caption: [Accuracy on index-hole questions.])
 
 == 6.3 Label distribution and Gate 0
 
-#wide("figs/04_label_distribution.pdf", [Label shares under both rules.])
+#wide("figs/04_label_distribution.png", [Label shares under both rules.])
 
 Gate 0 needs each class at 15% or more of pilot labels. It fails with the default rule: RETRIEVE is 11.2%. With `miss_as_retrieve` the pilot passes at 35 / 36 / 28 (ANSWER / RETRIEVE / ABSTAIN), but ABSTAIN is 13% on TriviaQA train and test.
 
@@ -234,7 +230,7 @@ ABSTAIN is about 70% of NQ under the default rule. We have not hand-checked thes
 == 6.4 Probe comparison (two-way label)
 
 #wide(
-  "figs/11_probe_results.pdf",
+  "figs/11_probe_results.png",
   [Macro-F1 at layer 17 with 95% bootstrap intervals and AUROC. Test is 600 NQ + TriviaQA questions. PopQA is 300 questions.],
 )
 
