@@ -12,17 +12,23 @@ paths:
   features: data/features        # {model_tag}/L{layer}/{kind}_{dataset}_{split}.npy
   results: runs
 
-model:                           # D1, confirmed in Phase 0
-  generator: google/gemma-3-4b-it
+model:                           # D1, confirmed 2026-10-29
+  generator: google/gemma-3-4b-it  # gated: accept the licence on HF, then `hf auth login`
   tag: gemma3-4b-it
-  sae_release: null              # filled by Person 3 after the coverage check
-  sae_widths: []                 # two widths, e.g. [16k, 262k]
-  layers: []                     # six layers, early / middle / late
+  sae_repo: google/gemma-scope-2-4b-it  # CC-BY-4.0, SAEs trained on the IT model
+  sae_site: resid_post
+  sae_l0: medium                 # small 10-20 / medium 30-60 / big 60-150 active features
+  sae_widths: [16k, 262k]
+  sae_layers: [9, 17, 22, 29]    # 25/50/65/85% of 34 layers: the subset Gemma Scope 2 recommends
+  dense_layers: [4, 9, 13, 17, 22, 29]  # dense probe sweep (6 layers, as in the proposal)
 
 generation:                      # D4
   max_new_tokens: 32
   temperature: 0.0
-  batch_size: 64
+  batch_size: 64                 # HF backend / feature extraction; lower it if you hit OOM
+  backend: vllm                  # vllm (fast, needs bf16 GPU) | hf (works everywhere)
+  dtype: auto                    # auto = bf16 if the GPU supports it, else fp32 (never fp16 for Gemma 3)
+  max_model_len: 4096            # RAG prompts are ~600 tokens
 
 retrieval:                       # D2, D3
   corpus: wikipedia-dpr-100w
