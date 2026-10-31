@@ -112,7 +112,9 @@ Notes:
 | Features | `python -m saerag.features.extract --files pilot` | `data/features/{tag}/L{layer}/` | P3 |
 | Probes | `python -m saerag.probes.train` | `runs/routers/<id>/probs_*.jsonl` | P3 |
 | Feature analysis | `python -m saerag.probes.analyze --layer 17 ...` | `runs/probes/.../analysis__*/` | P3 |
-| Baselines, metrics | `saerag.baselines`, `saerag.eval` | `runs/` | P4 |
+| Baselines | `python -m saerag.baselines.run --routers b1 b2 b3 b8 --files pilot` | `runs/routers/<id>/` | P4 |
+| Scores | `python -m saerag.eval.score --routers <ids> --files <files> --val-file nq_val` | `runs/scores/` | P4 |
+| Hand check | `python -m saerag.eval.handcheck sample --files ...`, then `score` ([protocol](docs/HANDCHECK.md)) | `runs/handcheck/` | P4 |
 
 Shared, tested contract (change only after telling the team): `schema.py` (record formats), `answers.py` (correctness), `labels.py` (label rule), `prompts.py` (frozen at pilot).
 
