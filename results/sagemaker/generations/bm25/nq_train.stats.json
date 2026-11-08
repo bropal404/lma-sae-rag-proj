@@ -1,0 +1,11 @@
+{
+  "file": "nq_train",
+  "condition": "bm25",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 4000,
+  "accuracy": 0.19,
+  "accuracy_hole": 0.0447,
+  "seconds": 674.8,
+  "sec_per_1k": 168.7
+}

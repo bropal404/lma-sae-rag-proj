@@ -1,0 +1,11 @@
+{
+  "file": "triviaqa_val",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 500,
+  "accuracy": 0.506,
+  "accuracy_hole": 0.5032,
+  "seconds": 12.4,
+  "sec_per_1k": 24.9
+}

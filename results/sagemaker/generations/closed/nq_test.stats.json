@@ -1,0 +1,11 @@
+{
+  "file": "nq_test",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 1000,
+  "accuracy": 0.18,
+  "accuracy_hole": 0.1974,
+  "seconds": 30.1,
+  "sec_per_1k": 30.1
+}
