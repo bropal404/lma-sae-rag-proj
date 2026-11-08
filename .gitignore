@@ -13,3 +13,4 @@ indexes/
 *.npz
 *.safetensors
 wandb/
+.env
