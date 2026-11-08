@@ -1,0 +1,11 @@
+{
+  "file": "pilot",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 500,
+  "accuracy": 0.354,
+  "accuracy_hole": 0.3057,
+  "seconds": 14.3,
+  "sec_per_1k": 28.5
+}

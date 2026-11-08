@@ -1,0 +1,11 @@
+{
+  "file": "selfaware_test",
+  "condition": "bm25",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 500,
+  "accuracy": 0.0,
+  "accuracy_hole": null,
+  "seconds": 78.0,
+  "sec_per_1k": 156.1
+}
