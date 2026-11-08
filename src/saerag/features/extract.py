@@ -112,9 +112,9 @@ def main() -> None:
                 h = hs[L + 1].to(device).float()  # output of block L = Gemma Scope's hook point
                 last = h[:, -1]                # left padding: final position is the last token
                 mean = (h * qmask[..., None]).sum(1) / qmask.sum(1, keepdim=True).clamp(min=1)
-                assert last.abs().max() < 65504, "activation overflows the float16 store"
-                feats[(L, "resid_last")].append(last.half().cpu().numpy())
-                feats[(L, "resid_mean")].append(mean.half().cpu().numpy())
+                # float32: Gemma 3's residual stream has outlier dimensions above the float16 max.
+                feats[(L, "resid_last")].append(last.cpu().numpy())
+                feats[(L, "resid_mean")].append(mean.cpu().numpy())
                 for w in m["sae_widths"]:
                     if (sae := saes.get((L, w))) is None:
                         continue

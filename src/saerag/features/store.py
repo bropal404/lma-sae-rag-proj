@@ -1,7 +1,7 @@
 """Where features live on disk, shared by extraction and probes.
 
     data/features/{tag}/qids_{file}.json                 row order for every array below
-    data/features/{tag}/L{layer}/resid_last_{file}.npy   [n, d_model] float16
+    data/features/{tag}/L{layer}/resid_last_{file}.npy   [n, d_model] float32
     data/features/{tag}/L{layer}/resid_mean_{file}.npy   mean over the question's tokens
     data/features/{tag}/L{layer}/sae{W}_last_{file}.npz  scipy CSR [n, W] float32
     data/features/{tag}/L{layer}/sae{W}_mean_{file}.npz
