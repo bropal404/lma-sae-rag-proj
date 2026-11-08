@@ -1,0 +1,7 @@
+# One L4 (bf16) on SageMaker, Hugging Face backend. Used by scripts/sagemaker/run.sh.
+extends: default.yaml
+model:
+  generator: unsloth/gemma-3-4b-it   # ungated mirror of google/gemma-3-4b-it, same weight hashes
+generation:
+  backend: hf
+  batch_size: 32
