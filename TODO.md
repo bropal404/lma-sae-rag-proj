@@ -24,6 +24,9 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 - [x] Generation (vLLM or HF backend), labels and gate report
 - [x] Gemma 3 4B closed-book, BM25 and gold generations and labels on the benchmark splits (Kaggle, 2×T4; ~140 s per 1,000 questions closed-book, ~1,250 s with BM25)
 - [x] Gate 0 check: default rule fails (RETRIEVE 11.2%); `miss_as_retrieve` passes on the pilot (35 / 36 / 28) but ABSTAIN is 13% on TriviaQA
+- [x] **Label rule settled: `miss_as_retrieve`** (2026-11-10, asked the group). Labels for all splits are in `data/labels/miss_as_retrieve/`; use these from now on
+- [x] Failure analysis, including PopQA popularity bins ([runs/analysis/gemma3-4b-it/](runs/analysis/gemma3-4b-it/))
+- [x] Generation latency at batch size 1 (Kaggle 2×T4, fp32, 200 questions with a gold passage): p50 / p95 closed 431 / 764 ms, BM25 1,429 / 1,952 ms, gold 760 / 1,130 ms; gold on the L4 estimated at 211 / 439 ms ([runs/latency/latency_p2.md](runs/latency/latency_p2.md))
 
 ### Person 3 (Gopal): activations, SAEs and probes
 - [x] Feature extraction, probe training and analysis code
@@ -44,11 +47,8 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 - [ ] Report sections: retrieval, holes, retriever shift, SAE features
 
 ### Manya (~5 days)
-- [ ] **First:** settle the label rule (default or `miss_as_retrieve`) with the team, then remake labels for all splits; this blocks Gopal and Salvik *(1 day, week 1)*
-- [ ] Generation latency at batch size 1 for each condition *(0.5 day, week 1)*
 - [ ] Dense-retriever generation condition, after Nidhi's index (~5 h compute) *(1 day, week 2)*
 - [ ] Grid ablations with `scripts/ada_grid.sbatch`: L1, binarised, mean-pooling, after Gopal's extraction *(1 day, week 2)*
-- [ ] Failure analysis, including PopQA popularity bins *(1.5 days, week 3)*
 - [ ] Report sections: data, label rule, Gate 0
 
 ### Gopal (~4.5 days, critical path)
@@ -66,13 +66,13 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 - [ ] Report sections: results tables and figures, limitations
 
 ### Team
-- [ ] Agree on the label rule (week 1, led by Manya)
+- [x] Agree on the label rule: `miss_as_retrieve` (2026-11-10)
 - [ ] Gold condition for NQ/TriviaQA: keep the answer-bearing BM25 stand-in, or move to DPR's gold files? 372 of 1,000 PopQA questions have no stand-in
 - [ ] Shared storage for `data/` (the index is on ADA under Nidhi's home directory)
 - [ ] Final report: everyone edits the full draft together (week 3)
 
 ### Gates
-- [ ] Gate 0: each class ≥ 15% of pilot labels (default fails; variant passes)
+- [x] Gate 0: each class ≥ 15% of pilot labels (`miss_as_retrieve` passes: 35 / 36 / 28; default fails)
 - [ ] Gate 1: label error < 10% on the hand check
 - [ ] Gate 2: a router cuts retrieval calls versus B1 with at most 2 points of accuracy loss
 - [ ] Gate 3: latency measured for every method

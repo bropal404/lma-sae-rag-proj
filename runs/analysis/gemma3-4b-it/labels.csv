@@ -1,0 +1,21 @@
+split,rule,n,ANSWER,RETRIEVE,ABSTAIN,under 15%
+pilot,miss_as_retrieve,500,0.354,0.364,0.282,-
+pilot,default,500,0.354,0.112,0.534,RETRIEVE
+nq_train,miss_as_retrieve,4000,0.1855,0.353,0.4615,-
+nq_train,default,4000,0.1855,0.1168,0.6978,RETRIEVE
+nq_val,miss_as_retrieve,500,0.172,0.358,0.47,-
+nq_val,default,500,0.172,0.104,0.724,RETRIEVE
+nq_test,miss_as_retrieve,1000,0.181,0.369,0.45,-
+nq_test,default,1000,0.181,0.122,0.697,RETRIEVE
+triviaqa_train,miss_as_retrieve,4000,0.52,0.3488,0.1312,ABSTAIN
+triviaqa_train,default,4000,0.52,0.1842,0.2958,-
+triviaqa_val,miss_as_retrieve,500,0.506,0.326,0.168,-
+triviaqa_val,default,500,0.506,0.164,0.33,-
+triviaqa_test,miss_as_retrieve,1000,0.504,0.363,0.133,ABSTAIN
+triviaqa_test,default,1000,0.504,0.21,0.286,-
+popqa_test,miss_as_retrieve,1000,0.172,0.323,0.505,-
+popqa_test,default,1000,0.172,0.218,0.61,-
+hotpotqa_test,miss_as_retrieve,1000,0.188,0.47,0.342,-
+hotpotqa_test,default,1000,0.188,0.131,0.681,RETRIEVE
+selfaware_test,miss_as_retrieve,500,0.0,0.0,1.0,"ANSWER, RETRIEVE"
+selfaware_test,default,500,0.0,0.0,1.0,"ANSWER, RETRIEVE"
