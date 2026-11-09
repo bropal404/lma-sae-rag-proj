@@ -8,7 +8,9 @@
   "L29_16k_l0": 83.8995,
   "L29_16k_fvu": 0.5169869626729277,
   "n": 4000,
-  "seconds": 37.286172160000206,
+  "seconds": 68.0325023839996,
   "dtype": "torch.bfloat16",
-  "closed_book": false
+  "closed_book": false,
+  "L17_262k_l0": 57.2395,
+  "L22_262k_l0": 57.56175
 }
