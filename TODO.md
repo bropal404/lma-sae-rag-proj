@@ -27,6 +27,7 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 - [x] **Label rule settled: `miss_as_retrieve`** (2026-11-10, asked the group). Labels for all splits are in `data/labels/miss_as_retrieve/`; use these from now on
 - [x] Failure analysis, including PopQA popularity bins ([runs/analysis/gemma3-4b-it/](runs/analysis/gemma3-4b-it/))
 - [x] Generation latency at batch size 1 (Kaggle 2×T4, fp32, 200 questions with a gold passage): p50 / p95 closed 431 / 764 ms, BM25 1,429 / 1,952 ms, gold 760 / 1,130 ms; gold on the L4 estimated at 211 / 439 ms ([runs/latency/latency_p2.md](runs/latency/latency_p2.md))
+- [x] Gate 1 hand check (taken over from Salvik), 200 labels, `miss_as_retrieve`: first pass 21/200 (10.5%, FAIL), 20 of the 21 from the matcher missing correct replies (middle names, quoted nicknames, Unicode minus/apostrophes, accents). Fixed `answers.is_correct` (never stricter than before; `contains_answer` for passages unchanged), rescored all generations with `scripts/rescore_generations.py` (295 replies now correct, none lost) and remade the labels (181 of 14,000 changed, 100 of them in nq_train). Rescore: **13/200 (6.5%), PASS**. First pass by Claude, to be reviewed by Manya; sheet in `runs/handcheck/`
 
 ### Person 3 (Gopal): activations, SAEs and probes
 - [x] Feature extraction, probe training and analysis code
@@ -59,7 +60,6 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 - [ ] If the debug runs past 2 days, say so early so Manya can start the extraction
 
 ### Salvik (~5 days)
-- [ ] **Now:** the 200-label hand check (Gate 1: label error < 10%); recheck after the label rule changes *(1 day, week 1)*
 - [ ] Run B4 on GPU, and B1–B3 and B8 on the real labels *(1 day, week 1)*
 - [ ] Controller latency (forward pass + probe) at batch size 1, and the full H4 latency table from everyone's timings *(1 day, week 2)*
 - [ ] Score every router and probe with `eval/score.py`, split by all / hole / non-hole / dataset (Gate 2, H1, H3) *(1.5 days, week 2–3)*
@@ -73,7 +73,7 @@ Move items from "To do" to "Done" as you finish them and commit the change. The 
 
 ### Gates
 - [x] Gate 0: each class ≥ 15% of pilot labels (`miss_as_retrieve` passes: 35 / 36 / 28; default fails)
-- [ ] Gate 1: label error < 10% on the hand check
+- [x] Gate 1: label error < 10% on the hand check (6.5% after the matcher fix; pending Manya's review of the verdicts)
 - [ ] Gate 2: a router cuts retrieval calls versus B1 with at most 2 points of accuracy loss
 - [ ] Gate 3: latency measured for every method
 

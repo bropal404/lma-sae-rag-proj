@@ -1,13 +1,13 @@
 set,subset,rule,n,ANSWER,RETRIEVE,ABSTAIN,gate
-pilot,all,miss_as_retrieve,500,0.354,0.364,0.282,PASS
-pilot,all,default,500,0.354,0.112,0.534,FAIL
-pilot,nq,miss_as_retrieve,250,0.208,0.38,0.412,PASS
-pilot,nq,default,250,0.208,0.096,0.696,FAIL
+pilot,all,miss_as_retrieve,500,0.354,0.368,0.278,PASS
+pilot,all,default,500,0.354,0.116,0.53,FAIL
+pilot,nq,miss_as_retrieve,250,0.208,0.388,0.404,PASS
+pilot,nq,default,250,0.208,0.104,0.688,FAIL
 pilot,triviaqa,miss_as_retrieve,250,0.5,0.348,0.152,PASS
 pilot,triviaqa,default,250,0.5,0.128,0.372,FAIL
-train (nq+triviaqa),all,miss_as_retrieve,8000,0.3528,0.3509,0.2964,PASS
-train (nq+triviaqa),all,default,8000,0.3528,0.1505,0.4968,PASS
-train (nq+triviaqa),nq,miss_as_retrieve,4000,0.1855,0.353,0.4615,PASS
-train (nq+triviaqa),nq,default,4000,0.1855,0.1168,0.6978,FAIL
-train (nq+triviaqa),triviaqa,miss_as_retrieve,4000,0.52,0.3488,0.1312,FAIL
-train (nq+triviaqa),triviaqa,default,4000,0.52,0.1842,0.2958,PASS
+train (nq+triviaqa),all,miss_as_retrieve,8000,0.3592,0.3566,0.2841,PASS
+train (nq+triviaqa),all,default,8000,0.3592,0.1541,0.4866,PASS
+train (nq+triviaqa),nq,miss_as_retrieve,4000,0.1962,0.3645,0.4392,PASS
+train (nq+triviaqa),nq,default,4000,0.1962,0.1235,0.6802,FAIL
+train (nq+triviaqa),triviaqa,miss_as_retrieve,4000,0.5222,0.3488,0.129,FAIL
+train (nq+triviaqa),triviaqa,default,4000,0.5222,0.1848,0.293,PASS

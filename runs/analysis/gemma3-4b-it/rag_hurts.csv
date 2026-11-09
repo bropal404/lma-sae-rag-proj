@@ -1,8 +1,8 @@
 dataset,hole,n,closed right,RAG hurts,hurt share of known,hurt with answer in passages
 nq,False,691,119,59,0.4958,15
-nq,True,309,62,54,0.871,0
-triviaqa,False,717,358,101,0.2821,33
+nq,True,309,64,55,0.8594,0
+triviaqa,False,717,359,101,0.2813,33
 triviaqa,True,283,146,106,0.726,0
 popqa,False,1000,172,49,0.2849,22
-hotpotqa,False,698,128,64,0.5,16
-hotpotqa,True,302,60,38,0.6333,0
+hotpotqa,False,698,132,67,0.5076,19
+hotpotqa,True,302,63,39,0.619,0

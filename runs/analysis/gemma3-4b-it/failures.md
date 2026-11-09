@@ -15,18 +15,18 @@ Failure types:
 
 | subset | n | known, RAG keeps it | RAG hurts | RAG fixes | reader failure | retriever miss | beyond model | no gold passage | unanswerable |
 |---|---|---|---|---|---|---|---|---|---|
-| all test | 4500 | 12.8% | 10.5% | 15.1% | 6.4% | 16.9% | 14.1% | 13.2% | 11.1% |
-| nq | 1000 | 6.8% | 11.3% | 12.2% | 7.9% | 22.5% | 20.9% | 18.4% | 0.0% |
-| triviaqa | 1000 | 29.7% | 20.7% | 21.0% | 3.1% | 14.7% | 5.4% | 5.4% | 0.0% |
+| all test | 4500 | 12.9% | 10.6% | 15.4% | 6.2% | 17.3% | 13.3% | 13.2% | 11.1% |
+| nq | 1000 | 6.9% | 11.4% | 13.1% | 7.8% | 23.1% | 19.5% | 18.2% | 0.0% |
+| triviaqa | 1000 | 29.8% | 20.7% | 21.0% | 3.0% | 14.9% | 5.2% | 5.4% | 0.0% |
 | popqa | 1000 | 12.3% | 4.9% | 21.8% | 7.3% | 8.4% | 9.5% | 35.8% | 0.0% |
-| hotpotqa | 1000 | 8.6% | 10.2% | 13.1% | 10.3% | 30.3% | 27.5% | 0.0% | 0.0% |
+| hotpotqa | 1000 | 8.9% | 10.6% | 13.5% | 9.7% | 31.6% | 25.7% | 0.0% | 0.0% |
 | selfaware | 500 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 100.0% |
-| nq hole=False | 691 | 8.7% | 8.5% | 16.5% | 11.4% | 17.8% | 18.4% | 18.7% | 0.0% |
-| nq hole=True | 309 | 2.6% | 17.5% | 2.6% | 0.0% | 33.0% | 26.5% | 17.8% | 0.0% |
-| triviaqa hole=False | 717 | 35.8% | 14.1% | 28.7% | 4.3% | 7.7% | 4.0% | 5.3% | 0.0% |
-| triviaqa hole=True | 283 | 14.1% | 37.5% | 1.4% | 0.0% | 32.5% | 8.8% | 5.7% | 0.0% |
-| hotpotqa hole=False | 698 | 9.2% | 9.2% | 16.6% | 14.8% | 25.2% | 25.1% | 0.0% | 0.0% |
-| hotpotqa hole=True | 302 | 7.3% | 12.6% | 5.0% | 0.0% | 42.1% | 33.1% | 0.0% | 0.0% |
+| nq hole=False | 691 | 8.7% | 8.5% | 17.4% | 11.3% | 18.5% | 17.1% | 18.5% | 0.0% |
+| nq hole=True | 309 | 2.9% | 17.8% | 3.6% | 0.0% | 33.3% | 24.9% | 17.5% | 0.0% |
+| triviaqa hole=False | 717 | 36.0% | 14.1% | 28.7% | 4.2% | 7.7% | 4.0% | 5.3% | 0.0% |
+| triviaqa hole=True | 283 | 14.1% | 37.5% | 1.4% | 0.0% | 33.2% | 8.1% | 5.7% | 0.0% |
+| hotpotqa hole=False | 698 | 9.3% | 9.6% | 17.2% | 13.9% | 26.2% | 23.8% | 0.0% | 0.0% |
+| hotpotqa hole=True | 302 | 7.9% | 12.9% | 5.0% | 0.0% | 44.0% | 30.1% | 0.0% | 0.0% |
 
 CSV: `failure_types.csv`
 
@@ -35,12 +35,12 @@ CSV: `failure_types.csv`
 | dataset | hole | n | closed right | RAG hurts | hurt share of known | hurt with answer in passages |
 |---|---|---|---|---|---|---|
 | nq | False | 691 | 119 | 59 | 49.6% | 15 |
-| nq | True | 309 | 62 | 54 | 87.1% | 0 |
-| triviaqa | False | 717 | 358 | 101 | 28.2% | 33 |
+| nq | True | 309 | 64 | 55 | 85.9% | 0 |
+| triviaqa | False | 717 | 359 | 101 | 28.1% | 33 |
 | triviaqa | True | 283 | 146 | 106 | 72.6% | 0 |
 | popqa | False | 1000 | 172 | 49 | 28.5% | 22 |
-| hotpotqa | False | 698 | 128 | 64 | 50.0% | 16 |
-| hotpotqa | True | 302 | 60 | 38 | 63.3% | 0 |
+| hotpotqa | False | 698 | 132 | 67 | 50.8% | 19 |
+| hotpotqa | True | 302 | 63 | 39 | 61.9% | 0 |
 
 CSV: `rag_hurts.csv`
 
@@ -59,9 +59,9 @@ CSV: `popqa_bins.csv`
 
 | by | value | n | closed | bm25 | gold |
 |---|---|---|---|---|---|
-| level | hard | 1000 | 18.8% | 21.7% | 61.5% |
-| qtype | bridge | 773 | 10.6% | 16.6% | 60.0% |
-| qtype | comparison | 227 | 46.7% | 39.2% | 66.5% |
+| level | hard | 1000 | 19.5% | 22.4% | 63.8% |
+| qtype | bridge | 773 | 11.3% | 17.5% | 62.5% |
+| qtype | comparison | 227 | 47.6% | 39.2% | 68.3% |
 
 CSV: `hotpotqa.csv`
 
@@ -69,10 +69,10 @@ CSV: `hotpotqa.csv`
 
 | split | n | near misses closed | near misses bm25 | near misses gold | labels that would change |
 |---|---|---|---|---|---|
-| nq_test | 1000 | 60 | 76 | 54 | 11.5% |
-| triviaqa_test | 1000 | 54 | 48 | 31 | 7.3% |
+| nq_test | 1000 | 58 | 66 | 39 | 9.7% |
+| triviaqa_test | 1000 | 54 | 47 | 28 | 7.0% |
 | popqa_test | 1000 | 31 | 25 | 18 | 4.7% |
-| hotpotqa_test | 1000 | 65 | 71 | 163 | 18.9% |
+| hotpotqa_test | 1000 | 59 | 64 | 141 | 16.8% |
 | selfaware_test | 500 | 0 | 0 | 0 | 0.0% |
 
 CSV: `near_misses.csv`

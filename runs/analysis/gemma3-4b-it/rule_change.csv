@@ -1,11 +1,11 @@
 split,n,moved to RETRIEVE,moved share,ABSTAIN beyond_model,ABSTAIN retriever_miss,ABSTAIN unanswerable
-pilot,500,126,0.252,141,126,0
-nq_train,4000,945,0.2362,1846,945,0
-nq_val,500,127,0.254,235,127,0
-nq_test,1000,247,0.247,450,247,0
-triviaqa_train,4000,658,0.1645,525,658,0
-triviaqa_val,500,81,0.162,84,81,0
-triviaqa_test,1000,153,0.153,133,153,0
+pilot,500,126,0.252,139,126,0
+nq_train,4000,964,0.241,1757,964,0
+nq_val,500,132,0.264,220,132,0
+nq_test,1000,253,0.253,433,253,0
+triviaqa_train,4000,656,0.164,516,656,0
+triviaqa_val,500,81,0.162,82,81,0
+triviaqa_test,1000,155,0.155,130,155,0
 popqa_test,1000,105,0.105,505,105,0
-hotpotqa_test,1000,339,0.339,342,339,0
+hotpotqa_test,1000,350,0.35,320,350,0
 selfaware_test,500,0,0.0,0,0,500

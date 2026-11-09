@@ -1,0 +1,76 @@
+{
+ "n": 200,
+ "label_errors": 13,
+ "label_error_rate": 0.065,
+ "match_checks": 570,
+ "match_errors": 20,
+ "match_error_rate": 0.03508771929824561,
+ "gate1_pass": true,
+ "flagged": [
+  {
+   "qid": "hotpotqa:5a74547755429979e2882900",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "nq:4747ccebab1b662338f3",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "nq:5d80bb1871faa93f18dd",
+   "auto": "RETRIEVE",
+   "hand": "ABSTAIN"
+  },
+  {
+   "qid": "nq:6a85c1d757cb08c53503",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "nq:90c7ea68a22ceab50734",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "nq:9d2b4054d0bb90d1f473",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "nq:a5a87507a0645481f4db",
+   "auto": "ANSWER",
+   "hand": "ABSTAIN"
+  },
+  {
+   "qid": "nq:a723ed024a6bb81f316f",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "nq:c22877adfe65865eb6f6",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "nq:c3cbbaacf7e581f3ce0c",
+   "auto": "RETRIEVE",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "nq:fdf13a0d31fa11b83b15",
+   "auto": "RETRIEVE",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "popqa:5605841",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "triviaqa:qw_12201",
+   "auto": "RETRIEVE",
+   "hand": "ANSWER"
+  }
+ ]
+}
