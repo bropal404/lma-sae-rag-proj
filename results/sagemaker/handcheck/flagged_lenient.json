@@ -1,0 +1,121 @@
+{
+ "n": 200,
+ "label_errors": 22,
+ "label_error_rate": 0.11,
+ "match_checks": 566,
+ "match_errors": 39,
+ "match_error_rate": 0.06890459363957598,
+ "gate1_pass": false,
+ "flagged": [
+  {
+   "qid": "hotpotqa:5a8341c255429954d2e2ec6e",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5a83c3275542996488c2e4be",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5a8f73455542997ba9cb3269",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5ab28b395542993be8fa9941",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5ab6b13b554299710c8d1f3f",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5ab6bb575542995eadef0088",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5abbaf6c554299660624171c",
+   "auto": "RETRIEVE",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "hotpotqa:5ade0a275542997545bbbe2d",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5ade5e335542992fa25da766",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "hotpotqa:5adfb4b8554299603e418381",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "hotpotqa:5ae16ea85542990adbacf790",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "hotpotqa:5ae526c455429908b6326529",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "nq:07a170b3c9ece1e038c5",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "nq:46b852280011c4a51906",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "nq:6645253564e85385a196",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "nq:c0df25ee9219d8055ffa",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "nq:d86072d818628efc912e",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "popqa:6370984",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "triviaqa:bb_1412",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "triviaqa:dpql_1061",
+   "auto": "ABSTAIN",
+   "hand": "RETRIEVE"
+  },
+  {
+   "qid": "triviaqa:odql_7409",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  },
+  {
+   "qid": "triviaqa:qw_15086",
+   "auto": "ABSTAIN",
+   "hand": "ANSWER"
+  }
+ ]
+}

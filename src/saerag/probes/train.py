@@ -75,7 +75,7 @@ def load_block(cfg: dict, files: list[str], labels: str, layers: list[int], kind
 
 # ---------- models ----------
 
-def make_model(name: str, penalty: str, binarize: bool, seed: int):
+def make_model(name: str, penalty: str, binarize: bool, seed: int, c_grid: list[float] | None = None):
     if name == "majority":
         return DummyClassifier(strategy="most_frequent")
     lr = LogisticRegression(
@@ -89,7 +89,8 @@ def make_model(name: str, penalty: str, binarize: bool, seed: int):
     else:
         steps = [StandardScaler(), lr]
     pipe = make_pipeline(*steps)
-    return GridSearchCV(pipe, {"logisticregression__C": C_GRID}, cv=3, scoring="f1_macro", n_jobs=-1)
+    return GridSearchCV(pipe, {"logisticregression__C": c_grid or C_GRID}, cv=3, scoring="f1_macro",
+                        n_jobs=-1)
 
 
 # ---------- metrics ----------
@@ -141,6 +142,7 @@ def main() -> None:
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--top-features", type=int, default=10)
     ap.add_argument("--name", default="", help="run-dir suffix, for runs that share train and eval")
+    ap.add_argument("--c-grid", nargs="+", type=float, help=f"values of C to search (default {C_GRID})")
     args = ap.parse_args()
     cfg = load_config(args.config)
     m = cfg["model"]
@@ -189,7 +191,7 @@ def main() -> None:
                 for ev, tr, te in splits:
                     if model is None or not args.eval:      # held-out files share one fit
                         tr = subsample(tr, y, budget, seed)
-                        model = make_model(name, args.penalty, args.binarize, seed).fit(X[tr], y[tr])
+                        model = make_model(name, args.penalty, args.binarize, seed, args.c_grid).fit(X[tr], y[tr])
                     probs[te] = model.predict_proba(X[te])
                     per_eval.setdefault(ev if args.eval else "cv", []).append(te)
                 for ev, tes in per_eval.items():
@@ -197,7 +199,7 @@ def main() -> None:
                     rows.append({"model": name, "budget": budget or "full", "seed": seed, "eval": ev,
                                  **score(probs[te], y[te], len(classes))})
                 if budget is None and seed == args.seeds[0] and name != "majority":
-                    pid = f"{m['tag']}__{args.labels}__{name}__{variant}"
+                    pid = f"{m['tag']}__{args.labels}__{name}__{variant}" + (f"__{args.name}" if args.name else "")
                     rdir = path(cfg, "results", "routers", pid)
                     rdir.mkdir(parents=True, exist_ok=True)
                     for ev, tes in per_eval.items():
@@ -218,7 +220,7 @@ def main() -> None:
     for name, X in feats.items():
         if not name.startswith("sae") or args.top_features <= 0:
             continue
-        model = make_model(name, args.penalty, args.binarize, args.seeds[0]).fit(X[:n_train], y[:n_train])
+        model = make_model(name, args.penalty, args.binarize, args.seeds[0], args.c_grid).fit(X[:n_train], y[:n_train])
         coef = model.best_estimator_[-1].coef_
         coef = np.vstack([-coef[0], coef[0]]) if coef.shape[0] == 1 else coef
         top = {c: [int(i) for i in np.argsort(-coef[j])[: args.top_features]]
