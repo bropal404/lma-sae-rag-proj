@@ -1,7 +1,7 @@
 """Per-router latency on the timed questions (H4), with argmax routing.
 
-ANSWER costs a closed-book generation, RETRIEVE a BM25-RAG generation (plus BM25 search,
-measured separately on ADA), ABSTAIN nothing. Probes add the controller time, B4 its own
+ANSWER costs a closed-book generation, RETRIEVE BM25 search (top-3, from bm25_latency.py, if
+it has run) plus a BM25-RAG generation, ABSTAIN nothing. Probes add the controller time, B4 its own
 generation, and B8 nothing measurable. Writes runs/latency/routed.csv.
 """
 import argparse, json
@@ -21,6 +21,9 @@ cfg = load_config(args.config)
 tag = cfg["model"]["tag"]
 
 stages = pd.read_json(path(cfg, "results", "latency", "stages.jsonl"), lines=True).set_index("qid")
+bm25 = path(cfg, "results", "latency", "bm25.jsonl")
+stages["bm25_ms"] = pd.read_json(bm25, lines=True).set_index("qid").bm25_ms if bm25.exists() else 0.0
+print("BM25 search time", "included" if bm25.exists() else "NOT included (run bm25_latency.py)")
 probes = [f"{tag}__{args.variant}__{k}@L{args.layer}__l2{s}" for k in ("resid_last", "sae16k_last") for s in ("", "__2way")]
 routers = ["b1_always_retrieve", "b2_never_retrieve", "b3_oracle", "b4_verbalised", "b8_tfidf_lr", *probes]
 
@@ -38,7 +41,7 @@ for rid in routers:
     lat = []
     for q, a in acts.items():
         s = stages.loc[q]
-        lat.append((s[ctrl] if ctrl else 0.0) + {"ANSWER": s.closed_ms, "RETRIEVE": s.rag_ms, "ABSTAIN": 0.0}[a])
+        lat.append((s[ctrl] if ctrl else 0.0) + {"ANSWER": s.closed_ms, "RETRIEVE": s.bm25_ms + s.rag_ms, "ABSTAIN": 0.0}[a])
     rows.append({"router": rid, "n": len(lat), "retrieval_calls": np.mean([a == "RETRIEVE" for a in acts.values()]),
                  "p50_ms": np.median(lat), "p95_ms": np.percentile(lat, 95), "mean_ms": np.mean(lat)})
 df = pd.DataFrame(rows).round(3)
