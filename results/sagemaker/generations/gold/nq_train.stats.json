@@ -4,8 +4,9 @@
   "backend": "hf",
   "model": "unsloth/gemma-3-4b-it",
   "n": 3085,
-  "accuracy": 0.6152,
-  "accuracy_hole": 0.6015,
+  "accuracy": 0.6373,
+  "accuracy_hole": 0.6297,
   "seconds": 229.0,
-  "sec_per_1k": 74.2
+  "sec_per_1k": 74.2,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
 }
