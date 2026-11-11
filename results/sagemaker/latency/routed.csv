@@ -3,8 +3,8 @@ b1_always_retrieve,200,1.0,251.385,541.037,296.106
 b2_never_retrieve,200,0.0,201.145,399.933,224.569
 b3_oracle,200,0.435,202.134,446.544,198.296
 b4_verbalised,200,0.59,466.173,790.218,481.767
-b8_tfidf_lr,200,0.245,154.715,403.411,156.253
-gemma3-4b-it__miss_as_retrieve__resid_last@L17__l2,200,0.255,206.729,452.209,197.326
-gemma3-4b-it__miss_as_retrieve__resid_last@L17__l2__2way,200,0.735,300.516,575.796,330.497
-gemma3-4b-it__miss_as_retrieve__sae16k_last@L17__l2,200,0.28,211.427,479.58,217.774
-gemma3-4b-it__miss_as_retrieve__sae16k_last@L17__l2__2way,200,0.745,299.098,595.091,331.259
+b8_tfidf_lr,200,0.26,154.511,411.257,160.081
+gemma3-4b-it__miss_as_retrieve__resid_last@L17__l2,200,0.275,208.455,457.838,206.902
+gemma3-4b-it__miss_as_retrieve__resid_last@L17__l2__2way,200,0.72,300.516,575.796,329.924
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L17__l2,200,0.295,211.821,479.58,220.758
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L17__l2__2way,200,0.745,298.826,595.091,330.136
