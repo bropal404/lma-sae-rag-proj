@@ -7,5 +7,6 @@
   "accuracy": 0.0,
   "accuracy_hole": null,
   "seconds": 78.0,
-  "sec_per_1k": 156.1
+  "sec_per_1k": 156.1,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
 }
