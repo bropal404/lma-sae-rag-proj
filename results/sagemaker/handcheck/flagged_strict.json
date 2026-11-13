@@ -1,10 +1,10 @@
 {
  "n": 200,
- "label_errors": 16,
- "label_error_rate": 0.08,
+ "label_errors": 15,
+ "label_error_rate": 0.075,
  "match_checks": 566,
- "match_errors": 29,
- "match_error_rate": 0.05123674911660778,
+ "match_errors": 27,
+ "match_error_rate": 0.04770318021201413,
  "gate1_pass": true,
  "flagged": [
   {
@@ -59,11 +59,6 @@
   },
   {
    "qid": "nq:c0df25ee9219d8055ffa",
-   "auto": "ABSTAIN",
-   "hand": "RETRIEVE"
-  },
-  {
-   "qid": "nq:d86072d818628efc912e",
    "auto": "ABSTAIN",
    "hand": "RETRIEVE"
   },

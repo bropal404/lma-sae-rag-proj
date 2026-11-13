@@ -12,19 +12,19 @@
     "pass": true,
     "class_shares": {
       "ANSWER": 0.354,
-      "RETRIEVE": 0.362,
-      "ABSTAIN": 0.284
+      "RETRIEVE": 0.366,
+      "ABSTAIN": 0.28
     },
     "source": "data/labels/ (canonical)"
   },
   "gate1": {
     "pass_point_estimate": true,
-    "errors": 16,
+    "errors": 15,
     "n": 200,
-    "rate": 0.08,
+    "rate": 0.075,
     "wilson95": [
-      0.049840585889759974,
-      0.12598948826714396
+      0.04597491718438201,
+      0.12004361023629456
     ],
     "lenient_rate": 0.11
   },
