@@ -1,0 +1,11 @@
+model,validation_macro_f1,validation_files,selected
+resid_last@L22,0.5307368359625242,2,True
+sae16k_last@L29,0.5183678731061615,2,True
+resid_last@L17,0.5179141643223335,2,False
+sae16k_last@L22,0.5049667224386862,2,False
+resid_last@L29,0.4950866226825017,2,False
+sae16k_last@L17,0.49292009696814965,2,False
+resid_last@L9,0.4832541531698252,2,False
+text-tfidf,0.44253585496618647,2,False
+sae16k_last@L9,0.40795876688627164,2,False
+majority,0.16420021665368534,2,False
