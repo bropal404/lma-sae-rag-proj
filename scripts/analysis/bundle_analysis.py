@@ -17,6 +17,7 @@ import pandas as pd
 
 from saerag.config import REPO_ROOT, load_config, path
 from saerag.eval import metrics
+from saerag.eval.bootstrap import paired_bootstrap
 from saerag.eval.score import load_labels, load_probs, threshold_from_val
 from saerag.schema import Generation, Question, read_jsonl
 
@@ -70,22 +71,18 @@ def main() -> None:
             for kind in ("sae16k_last", "resid_last"):
                 _, acts[kind, L] = routed(cfg, pid(kind, L), file)
 
-        # Paired bootstrap: resample questions once, score both probes on the same draw.
+        # Paired bootstrap: resample *rows* so repeated questions remain repeated.
         for L in LAYERS:
-            sae, dense = acts["sae16k_last", L], acts["resid_last", L]
-            point = {k: stats(sae, labels, closed, rag, qids)[k] - stats(dense, labels, closed, rag, qids)[k]
-                     for k in ("macro_f1", "accuracy", "hallucination", "retrieval_calls")}
-            draws = {k: [] for k in point}
-            for _ in range(N_BOOT):
-                s = rng.choice(qids, len(qids))
-                a, b = stats(sae, labels, closed, rag, s), stats(dense, labels, closed, rag, s)
-                for k in draws:
-                    if not (np.isnan(a[k]) or np.isnan(b[k])):
-                        draws[k].append(a[k] - b[k])
-            for k, d in draws.items():
-                lo, hi = np.percentile(d, [2.5, 97.5]) if d else (np.nan, np.nan)
-                boot.append({"file": file, "layer": L, "metric": k, "sae_minus_dense": point[k],
-                             "ci_low": lo, "ci_high": hi, "significant": not (lo <= 0 <= hi)})
+            ids = qids.tolist()
+            comparisons = paired_bootstrap(
+                [labels[q] for q in ids],
+                [acts["sae16k_last", L][q] for q in ids],
+                [acts["resid_last", L][q] for q in ids],
+                [closed[q] for q in ids], [rag[q] for q in ids],
+                draws=N_BOOT, seed=cfg["seed"] + L + TESTS.index(file),
+            )
+            for row in comparisons:
+                boot.append({"file": file, "layer": L, **row})
 
         for kind in ("sae16k_last", "resid_last"):
             cm = metrics.confusion(acts[kind, 22], labels)

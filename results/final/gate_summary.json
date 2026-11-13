@@ -1,0 +1,79 @@
+{
+  "source_snapshot": "team-repo",
+  "label_variant": "miss_as_retrieve",
+  "selection_rule": "full-label validation macro-F1 on NQ+TriviaQA val; never select by test",
+  "models": {
+    "sae": "sae16k_last@L29",
+    "dense": "resid_last@L22",
+    "sae_router": "gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2",
+    "dense_router": "gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2"
+  },
+  "gate0": {
+    "pass": true,
+    "class_shares": {
+      "ANSWER": 0.354,
+      "RETRIEVE": 0.362,
+      "ABSTAIN": 0.284
+    },
+    "source": "data/labels/ (canonical)"
+  },
+  "gate1": {
+    "pass_point_estimate": true,
+    "errors": 16,
+    "n": 200,
+    "rate": 0.08,
+    "wilson95": [
+      0.049840585889759974,
+      0.12598948826714396
+    ],
+    "lenient_rate": 0.11
+  },
+  "gate2_and_H1": {
+    "pass": true,
+    "answerable_test_n": 4000,
+    "b1_accuracy": 0.31875,
+    "selected_accuracy": 0.31525,
+    "selected_retrieval_calls": 0.49175,
+    "call_reduction": 0.50825
+  },
+  "H2": {
+    "sae_minus_dense_validation_macro_f1": -0.012368962856362686,
+    "sae_minus_dense_answerable_test_macro_f1": -0.023796510158042072,
+    "within_2_points_on_test": false,
+    "note": "SAE and dense selected independently on validation; a matched-layer comparison is also useful."
+  },
+  "H3": {
+    "lower_wrong_answer_rate_on_hole_questions": true,
+    "summary": {
+      "gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2": {
+        "wrong_per_hole_question": 0.6096196868008948,
+        "wrong_among_attempted": 0.7228116710875332,
+        "coverage": 0.843400447427293
+      },
+      "gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2__2way": {
+        "wrong_per_hole_question": 0.8221476510067114,
+        "wrong_among_attempted": 0.8221476510067114,
+        "coverage": 1.0
+      }
+    },
+    "note": "Wrong per all hole questions includes abstentions as safe; report coverage and conditional wrong rate too."
+  },
+  "gate3_and_H4": {
+    "selected_controller_timed": false,
+    "h4_pass": null,
+    "existing_latency_file": "results/sagemaker/latency/routed.csv"
+  },
+  "availability": {
+    "retrieval_archive_present": true,
+    "retrieval_archive_bytes": 17053635,
+    "raw_data_present": true,
+    "router_probabilities_present": true,
+    "features_present": false
+  },
+  "limitations": [
+    "Gold passages mostly retrieval-derived stand-ins, not independently verified gold",
+    "Index holes are query-time lexical filtering of BM25 top-100, not physical corpus deletion",
+    "SelfAware all-ABSTAIN: raw end-to-end answer accuracy is zero by metric definition; use abstention recall",
+    "Handcheck n=200 point estimate does not rule out a true rate above 10%"
+  ]
+}

@@ -25,6 +25,7 @@ ap.add_argument("--layer", type=int, default=17)
 ap.add_argument("--variant", default="miss_as_retrieve")
 ap.add_argument("--files", nargs="+", default=["nq_test", "triviaqa_test"])
 ap.add_argument("--n", type=int, default=100, help="questions per file")
+ap.add_argument("--out-name", default="", help="suffix for stages_{name}.jsonl to preserve previous measurements")
 args = ap.parse_args()
 cfg = load_config(args.config)
 m, g, L = cfg["model"], cfg["generation"], args.layer
@@ -70,10 +71,11 @@ for f in args.files:
 
 out = path(cfg, "results", "latency")
 out.mkdir(parents=True, exist_ok=True)
-with open(out / "stages.jsonl", "w") as fh:
+stem = "stages" + ("_" + args.out_name if args.out_name else "")
+with open(out / f"{stem}.jsonl", "w") as fh:
     fh.writelines(json.dumps(r) + "\n" for r in rows)
 df = pd.DataFrame(rows)
 cols = ["controller_ms", "closed_ms", "rag_ms", "b4_ms"]
 summary = pd.DataFrame({"p50": df[cols].median(), "p95": df[cols].quantile(0.95), "mean": df[cols].mean()}).round(1)
-summary.to_csv(out / "stages_summary.csv")
+summary.to_csv(out / f"{stem}_summary.csv")
 print(summary.to_string())

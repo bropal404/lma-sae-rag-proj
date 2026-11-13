@@ -1,0 +1,7 @@
+router,file,n,coverage,wrong_among_attempted,wrong_per_hole_question
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2,nq_test,309,0.7831715210355987,0.7975206611570248,0.6245954692556634
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2,triviaqa_test,283,0.8480565371024735,0.55,0.46643109540636046
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2,hotpotqa_test,302,0.9006622516556292,0.8088235294117647,0.728476821192053
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2__2way,nq_test,309,1.0,0.8964401294498382,0.8964401294498382
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2__2way,triviaqa_test,283,1.0,0.7067137809187279,0.7067137809187279
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2__2way,hotpotqa_test,302,1.0,0.8543046357615894,0.8543046357615894
