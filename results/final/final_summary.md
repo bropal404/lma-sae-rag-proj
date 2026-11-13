@@ -12,8 +12,8 @@ Generated from exported results. This is an audit, not a substitute for the full
 
 | Requirement | Result | Interpretation |
 |---|---|---|
-| Gate 0: ≥15% each class | PASS | ANSWER 35.4%, RETRIEVE 36.2%, ABSTAIN 28.4%; data/labels/ (canonical) |
-| Gate 1: <10% label error | PASS by point estimate | 16/200 = 8.0%; Wilson 95% CI [5.0%, 12.6%] |
+| Gate 0: ≥15% each class | PASS | ANSWER 35.4%, RETRIEVE 36.6%, ABSTAIN 28.0%; data/labels/ (canonical) |
+| Gate 1: <10% label error | PASS by point estimate | 15/200 = 7.5%; Wilson 95% CI [4.6%, 12.0%] |
 | Gate 2 / H1: accuracy within 2 points and ≥30% fewer BM25 calls | PASS | B1 31.9% vs SAE 31.5%, BM25 calls 49.2% (reduction 50.8%) on 4000 answerable questions |
 | Gate 3: latency of all chosen methods | PARTIAL | Current routed latency measures layer 17, not the validation-selected SAE layer |
 

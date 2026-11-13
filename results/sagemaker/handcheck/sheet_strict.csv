@@ -90,7 +90,7 @@ nq:cb67bac8355c195fc33c,nq,False,False,songs on 4 your eyez only j cole,Immortal
 nq:cf1d3c21364ea65697a3,nq,True,False,who did puerto rico belong to before the u.s,Taíno | indigenous Taíno people | Spain,False,ANSWER,,Spain,True,,Spain,True,,Spain,True,,
 nq:d110ecd32bb14c865c7d,nq,True,False,when did the soviet union start and end,in Eurasia,False,ABSTAIN,beyond_model,1922-1991,False,,1979–1985,False,,,,,bad gold: alias 'in Eurasia' does not answer 'when'
 nq:d662c2817050f54965b2,nq,True,False,what episode does caroline get turned into a vampire,Brave New World | The Return,False,ABSTAIN,beyond_model,"Season 2, Episode 13",False,,"Season 2, Episode 13",False,,Not specified,False,,
-nq:d86072d818628efc912e,nq,False,False,actress who plays penelope garcia on criminal minds,Kirsten Simone Vangsness,False,ABSTAIN,beyond_model,Luisa D'Alessandro,False,,Kirsten Vangsness,False,y,Kirsten Vangsness,False,y,middle name omitted
+nq:d86072d818628efc912e,nq,False,False,actress who plays penelope garcia on criminal minds,Kirsten Simone Vangsness,False,RETRIEVE,,Luisa D'Alessandro,False,,Kirsten Vangsness,True,y,Kirsten Vangsness,True,y,middle name omitted
 nq:e20593481b0794db59a5,nq,True,False,what is the year round weather in dubai,tropical desert climate,False,ABSTAIN,beyond_model,Hot and sunny.,False,,Warm and sunny,False,,"Sunny, warm, humid",False,,
 nq:e70870e69f298072ced5,nq,False,False,when does bill nye saves the world season 2 come out,"December 29, 2017",False,RETRIEVE,,"September 18, 2023",False,,Not specified in passages,False,,"December 29, 2017",True,,
 nq:fc44a18e5e6ed0ea7368,nq,True,False,who does the voice of alistair in dragon age,Steve Valentine,False,RETRIEVE,,Murray 처치,False,,Steve Valentine,True,,Steve Valentine,True,,
