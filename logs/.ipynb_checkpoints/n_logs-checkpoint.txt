@@ -1,0 +1,19 @@
+PREFLIGHT OK: 42 input files, BM25 timings present
+PREFLIGHT OK: 42 input files, BM25 timings present
+Traceback (most recent call last):
+  File "/home/sagemaker-user/lma-sae-rag-proj/scripts/sagemaker/latency_selected_measure.py", line 233, in <module>
+    main()
+  File "/home/sagemaker-user/lma-sae-rag-proj/scripts/sagemaker/latency_selected_measure.py", line 112, in main
+    raise FileExistsError(f"Refusing to overwrite {stages_path}; use --overwrite deliberately")
+FileExistsError: Refusing to overwrite /home/sagemaker-user/lma-sae-rag-proj/runs/latency/stages_l29.jsonl; use --overwrite deliberately
+                                             router   n  retrieval_calls  p50_ms  p95_ms  mean_ms       routing_policy  sae_layer  dense_layer                   method
+                                 b1_always_retrieve 200            1.000 231.305 492.808  273.714 validation-threshold         29           22 composed_measured_stages
+                                  b2_never_retrieve 200            0.000 182.695 358.539  202.303 validation-threshold         29           22 composed_measured_stages
+                                          b3_oracle 200            0.435 184.916 411.853  182.099 validation-threshold         29           22 composed_measured_stages
+                                      b4_verbalised 200            0.590 427.036 718.247  438.283 validation-threshold         29           22 composed_measured_stages
+                                        b8_tfidf_lr 200            0.385 184.910 419.441  196.392 validation-threshold         29           22 composed_measured_stages
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2 200            0.390 234.440 466.645  229.070 validation-threshold         29           22 composed_measured_stages
+ gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2 200            0.470 242.647 465.789  247.462 validation-threshold         29           22 composed_measured_stages
+WROTE /home/sagemaker-user/lma-sae-rag-proj/runs/latency/routed_l29.csv
+remote: Invalid username or token. Password authentication is not supported for Git operations.
+fatal: Authentication failed for 'https://github.com/bropal404/lma-sae-rag-proj.git/'
