@@ -59,9 +59,41 @@
     "note": "Wrong per all hole questions includes abstentions as safe; report coverage and conditional wrong rate too."
   },
   "gate3_and_H4": {
-    "selected_controller_timed": false,
-    "h4_pass": null,
-    "existing_latency_file": "results/sagemaker/latency/routed.csv"
+    "selected_controller_timed": true,
+    "gate3_complete": true,
+    "h4_pass": false,
+    "selected_sae": "gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2",
+    "selected_dense": "gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2",
+    "p50_ms": {
+      "b8_tfidf_lr": 184.91,
+      "b3_oracle": 184.916,
+      "gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2": 234.44,
+      "gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2": 242.647,
+      "b4_verbalised": 427.036,
+      "b1_always_retrieve": 231.305,
+      "b2_never_retrieve": 182.695
+    },
+    "p95_ms": {
+      "b8_tfidf_lr": 419.441,
+      "b3_oracle": 411.853,
+      "gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2": 466.645,
+      "gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2": 465.789,
+      "b4_verbalised": 718.247,
+      "b1_always_retrieve": 492.808,
+      "b2_never_retrieve": 358.539
+    },
+    "mean_ms": {
+      "b8_tfidf_lr": 196.392,
+      "b3_oracle": 182.099,
+      "gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2": 229.07,
+      "gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2": 247.462,
+      "b4_verbalised": 438.283,
+      "b1_always_retrieve": 273.714,
+      "b2_never_retrieve": 202.303
+    },
+    "mean_reduction_vs_always_retrieve": 0.1631045543888877,
+    "method": "composed_measured_stages",
+    "existing_latency_file": "results/sagemaker/latency/routed_l29.csv"
   },
   "availability": {
     "retrieval_archive_present": true,

@@ -219,18 +219,37 @@ def _report(repo: Path, dest: Path, selected: dict[str, str], selection: pd.Data
         }
     h3_pass = h3_aggs.get(primary, {}).get("wrong_per_hole_question", math.nan) < \
         h3_aggs.get(primary + "__2way", {}).get("wrong_per_hole_question", math.nan)
-    # Only claim H4 for a controller that was actually timed at the same layer.
+    # Gate 3 checks the *selected* SAE L29 and dense L22, not the older L17 run.
+    # Require layer-appropriate provenance and all chosen methods before claiming completion.
     selected_layer = int(re.search(r"@L(\d+)", selected["sae"]).group(1))
+    selected_dense_layer = int(re.search(r"@L(\d+)", selected["dense"]).group(1))
     routed_dir = repo / "results/sagemaker/latency"
     by_layer = routed_dir / f"routed_l{selected_layer}.csv"
+    meta_file = routed_dir / f"stages_l{selected_layer}_metadata.json"
+    stage_file = routed_dir / f"stages_l{selected_layer}.jsonl"
     routed_file = by_layer if by_layer.exists() else routed_dir / "routed.csv"
     routed = pd.read_csv(routed_file) if routed_file.exists() else pd.DataFrame()
     lat_rows = {r.router: r for _, r in routed.iterrows()} if not routed.empty else {}
-    h4_timed = (primary in lat_rows and SEED_ROUTER in lat_rows and "b4_verbalised" in lat_rows
-                and "routing_policy" in routed.columns
-                and (routed["routing_policy"] == "validation-threshold").all())
-    h4_pass = (float(lat_rows[primary].p50_ms) < float(lat_rows[SEED_ROUTER].p50_ms)
-               and float(lat_rows[primary].p50_ms) < float(lat_rows["b4_verbalised"].p50_ms)) if h4_timed else None
+    required_routers = {SEED_ROUTER, "b2_never_retrieve", "b3_oracle",
+                        "b4_verbalised", "b8_tfidf_lr", primary, dense}
+    meta = json.loads(meta_file.read_text()) if meta_file.exists() else {}
+    h4_timed = bool(
+        by_layer.exists() and stage_file.exists() and meta_file.exists()
+        and required_routers.issubset(lat_rows)
+        and int(meta.get("sae_layer", -1)) == selected_layer
+        and int(meta.get("dense_layer", -1)) == selected_dense_layer
+        and meta.get("variant") == PRIMARY
+        and {"sae_layer", "dense_layer", "method", "routing_policy", "n"}.issubset(routed.columns)
+        and (routed["sae_layer"] == selected_layer).all()
+        and (routed["dense_layer"] == selected_dense_layer).all()
+        and (routed["method"] == "composed_measured_stages").all()
+        and (routed["routing_policy"] == "validation-threshold").all()
+        and (routed["n"] == 200).all()
+    )
+    h4_pass = bool(
+        float(lat_rows[primary].p50_ms) < float(lat_rows[SEED_ROUTER].p50_ms)
+        and float(lat_rows[primary].p50_ms) < float(lat_rows["b4_verbalised"].p50_ms)
+    ) if h4_timed else None
     # H2 at full-data budget, selected families determined only on validation.
     val = selection.set_index("model").validation_macro_f1
     h2_val_gap = float(val[selected["sae"]] - val[selected["dense"]])
@@ -259,8 +278,19 @@ def _report(repo: Path, dest: Path, selected: dict[str, str], selection: pd.Data
                "note": "SAE and dense selected independently on validation; a matched-layer comparison is also useful."},
         "H3": {"lower_wrong_answer_rate_on_hole_questions": bool(h3_pass), "summary": h3_aggs,
                "note": "Wrong per all hole questions includes abstentions as safe; report coverage and conditional wrong rate too."},
-        "gate3_and_H4": {"selected_controller_timed": h4_timed, "h4_pass": h4_pass,
-                         "existing_latency_file": str(routed_file.relative_to(repo)) if routed_file.exists() else None},
+        "gate3_and_H4": {
+            "selected_controller_timed": h4_timed, "gate3_complete": h4_timed,
+            "h4_pass": h4_pass,
+            "selected_sae": primary, "selected_dense": dense,
+            "p50_ms": {rid: float(lat_rows[rid].p50_ms) for rid in required_routers} if h4_timed else None,
+            "p95_ms": {rid: float(lat_rows[rid].p95_ms) for rid in required_routers} if h4_timed else None,
+            "mean_ms": {rid: float(lat_rows[rid].mean_ms) for rid in required_routers} if h4_timed else None,
+            "mean_reduction_vs_always_retrieve": (
+                1 - float(lat_rows[primary].mean_ms) / float(lat_rows[SEED_ROUTER].mean_ms)
+            ) if h4_timed else None,
+            "method": "composed_measured_stages" if h4_timed else None,
+            "existing_latency_file": str(routed_file.relative_to(repo)) if routed_file.exists() else None,
+        },
         "availability": source,
         "limitations": ["Gold passages mostly retrieval-derived stand-ins, not independently verified gold",
                         "Index holes are query-time lexical filtering of BM25 top-100, not physical corpus deletion",
@@ -284,9 +314,13 @@ def _report(repo: Path, dest: Path, selected: dict[str, str], selection: pd.Data
              f"| Gate 2 / H1: accuracy within 2 points and ≥30% fewer BM25 calls | {'PASS' if gate2_ok else 'FAIL'} | " +
              f"B1 {f_pct(base.accuracy)} vs SAE {f_pct(selected_row.accuracy)}, " +
              f"BM25 calls {f_pct(selected_row.retrieval_call_rate)} (reduction {f_pct(1-selected_row.retrieval_call_rate)}) on {int(base.n)} answerable questions |",
-             f"| Gate 3: latency of all chosen methods | {'Selected SAE timed' if h4_timed else 'PARTIAL'} | " +
-             (f"SAE {lat_rows[primary].p50_ms:.1f} ms; B1 {lat_rows[SEED_ROUTER].p50_ms:.1f} ms" if h4_timed
-              else "Current routed latency measures layer 17, not the validation-selected SAE layer") + " |",
+             f"| Gate 3: latency of all chosen methods | {'COMPLETE' if h4_timed else 'PARTIAL'} | " +
+             (f"Selected SAE L{selected_layer} p50 {lat_rows[primary].p50_ms:.1f} ms; "
+              f"dense L{selected_dense_layer} p50 {lat_rows[dense].p50_ms:.1f} ms; "
+              f"B1 {lat_rows[SEED_ROUTER].p50_ms:.1f} ms. "
+              f"H4 {'PASS' if h4_pass else 'FAIL'} by predeclared median criterion. "
+              "Composed stage timings, n=200."
+              if h4_timed else "Selected-controller timings unavailable; do not infer H4 from older L17 measurements") + " |",
              "", "## H2: SAE versus dense", "",
              f"Validation macro-F1: SAE {f_pct(val[selected['sae']])}, dense {f_pct(val[selected['dense']])} "+
              f"(SAE − dense {h2_val_gap*100:+.2f} points).",
@@ -307,12 +341,31 @@ def _report(repo: Path, dest: Path, selected: dict[str, str], selection: pd.Data
              "## Existing latency evidence", "",
     ]
     if len(routed):
-        for rid in (SEED_ROUTER, "b4_verbalised", "b8_tfidf_lr", f"{TAG}__{PRIMARY}__sae16k_last@L17__l2",
-                    f"{TAG}__{PRIMARY}__resid_last@L17__l2", primary):
+        shown = (SEED_ROUTER, "b2_never_retrieve", "b3_oracle", "b4_verbalised",
+                 "b8_tfidf_lr", primary, dense) if h4_timed else (
+                 SEED_ROUTER, "b4_verbalised", "b8_tfidf_lr")
+        for rid in shown:
             if rid in lat_rows:
                 rr = lat_rows[rid]
                 lines.append(f"- `{rid}`: p50={rr.p50_ms:.1f} ms, p95={rr.p95_ms:.1f} ms, "
-                             f"BM25 calls={f_pct(rr.retrieval_calls)} (n={int(rr.n)}).")
+                             f"mean={rr.mean_ms:.1f} ms; BM25 calls={f_pct(rr.retrieval_calls)} "
+                             f"(n={int(rr.n)}).")
+    if h4_timed:
+        sae_r, b1_r, b4_r, dense_r = (lat_rows[x] for x in (primary, SEED_ROUTER, "b4_verbalised", dense))
+        mean_saving = 100 * (1 - sae_r.mean_ms / b1_r.mean_ms)
+        lines += ["", "## H4: selected-controller latency", "",
+                  f"**H4 {'PASS' if h4_pass else 'NOT SUPPORTED'}:** Median SAE L{selected_layer} "
+                  f"latency {sae_r.p50_ms:.1f} ms versus always-retrieve {b1_r.p50_ms:.1f} ms "
+                  f"and verbalised router {b4_r.p50_ms:.1f} ms. "
+                  "H4 requires the SAE median to beat both.",
+                  f"The selected dense L{selected_dense_layer} median is {dense_r.p50_ms:.1f} ms. "
+                  f"SAE improves mean latency by {mean_saving:.1f}% over always-retrieve "
+                  f"({sae_r.mean_ms:.1f} versus {b1_r.mean_ms:.1f} ms), and p95 "
+                  f"is {sae_r.p95_ms:.1f} versus {b1_r.p95_ms:.1f} ms.",
+                  "These are per-question composed costs from independently measured stages "
+                  "(GPU generation/controller plus prior BM25 retrieval timings), not integrated "
+                  "serving-system stopwatch measurements. The 200 timed questions are the first "
+                  "100 each from NQ and TriviaQA test, not a random workload sample."]
     lines += ["", "## Regression and diagnostic evidence", ""]
     if anomaly is not None:
         a = anomaly[(anomaly.labels == PRIMARY) & (anomaly.model == "sae16k_last@L17")]
@@ -324,18 +377,19 @@ def _report(repo: Path, dest: Path, selected: dict[str, str], selection: pd.Data
                              f"inner-CV={r.inner_cv_f1:.3f}, seeds={int(r.seeds)}.")
         lines.append("The original 1,000→2,000 degradation is not reproduced in these later seeds; "
                      "the original cause remains unverified.")
-    lines += ["", "## Audit limitations and open items", "",
-              "1. Re-run `scripts/analysis/bundle_analysis.py` on the machine holding raw router "
-              "probabilities: earlier paired bootstrap confidence intervals were invalid because duplicate "
-              "bootstrap sample IDs were collapsed by dictionaries.",
-              "2. Time the **selected SAE layer** at batch size 1 before claiming H4 for the locked primary router.",
-              "3. The authoritative handcheck is `sheet_strict.csv` / `flagged_strict.json`. The lenient "
-              "adjudication does not pass Gate 1; report that sensitivity and the confidence interval.",
-              "4. Explicitly disclose lexical top-100 index holes and retrieval-derived gold stand-ins.",
-              "5. Include reproducibility metadata: Gemma checkpoint, SAE site/width/L0, corpus revision, "
+    lines += ["", "## Audit limitations and remaining reporting work", "",
+              "1. The corrected paired bootstrap has been rerun on matcher-corrected labels "
+              "and stored under `results/analysis/`; include the selected-model (SAE L29 versus "
+              "dense L22) results separately from matched-layer ablations.",
+              "2. The 200-item strict handcheck reports a 7.5% error point estimate, but its Wilson "
+              "95% upper bound exceeds 10%; the lenient handcheck sensitivity is 11%.",
+              "3. Explicitly disclose lexical top-100 index holes and retrieval-derived gold stand-ins.",
+              "4. Include reproducibility metadata: Gemma checkpoint, SAE site/width/L0, corpus revision, "
               "data splits, seeds, GPU, decoding and matcher revision.",
-              "6. Verify availability of raw outputs (`data/`, `runs/`) on SageMaker. The repository ZIP "
-              "only contains the smaller exported summaries.", "",
+              "5. Large raw features and full router histories are not committed to Git; the "
+              "original SageMaker persistent volume is needed for full end-to-end reproduction.",
+              "6. The final scientific report requires synthesis and references; this audit "
+              "is not a finished paper.", "",
               "## Handoff readiness", "",
               f"Raw data directory included in snapshot: {source['raw_data_present']}; router probabilities included: "
               f"{source['router_probabilities_present']}. Neither is needed to inspect exported CSV results, "
@@ -380,7 +434,8 @@ def _report(repo: Path, dest: Path, selected: dict[str, str], selection: pd.Data
         "abstention recall is the appropriate SelfAware measure.",
         "", "## 6. Conclusion", "",
         "Use the gate-by-gate evidence above to state supported and unsupported hypotheses. "
-        "Do not claim universal SAE superiority or faster latency at an unmeasured layer.",
+        "State the H4 median-latency failure despite improved mean and tail latency. "
+        "Do not claim universal SAE superiority or full serving-system measurements.",
         "", "## References", "",
         "Reuse the vetted bibliography from `report/report_mid.typ` and add precise citations "
         "for Gemma 3, Gemma Scope 2, the datasets, BM25 and the probe methodology.", ""])
