@@ -1,0 +1,15 @@
+{
+  "gpu": "NVIDIA L4",
+  "model": "unsloth/gemma-3-4b-it",
+  "sae_layer": 29,
+  "dense_layer": 22,
+  "variant": "miss_as_retrieve",
+  "files": [
+    "nq_test",
+    "triviaqa_test"
+  ],
+  "n_per_file": 100,
+  "probe_training": "train-only 3-fold CV, L2, same preprocessing as probes.train",
+  "generation_max_new_tokens": 32,
+  "timing": "batch size 1; independently measured controllers and generations"
+}

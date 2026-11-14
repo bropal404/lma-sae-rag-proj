@@ -1,0 +1,8 @@
+router,n,retrieval_calls,p50_ms,p95_ms,mean_ms,routing_policy,sae_layer,dense_layer,method
+b1_always_retrieve,200,1.0,231.305,492.808,273.714,validation-threshold,29,22,composed_measured_stages
+b2_never_retrieve,200,0.0,182.695,358.539,202.303,validation-threshold,29,22,composed_measured_stages
+b3_oracle,200,0.435,184.916,411.853,182.099,validation-threshold,29,22,composed_measured_stages
+b4_verbalised,200,0.59,427.036,718.247,438.283,validation-threshold,29,22,composed_measured_stages
+b8_tfidf_lr,200,0.385,184.91,419.441,196.392,validation-threshold,29,22,composed_measured_stages
+gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2,200,0.39,234.44,466.645,229.07,validation-threshold,29,22,composed_measured_stages
+gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2,200,0.47,242.647,465.789,247.462,validation-threshold,29,22,composed_measured_stages

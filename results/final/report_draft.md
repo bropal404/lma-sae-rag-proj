@@ -24,7 +24,7 @@ The 2018 DPR-style Wikipedia corpus has 21,015,324 100-word passages. BM25 retur
 | Gate 0: ≥15% each class | PASS | ANSWER 35.4%, RETRIEVE 36.6%, ABSTAIN 28.0%; data/labels/ (canonical) |
 | Gate 1: <10% label error | PASS by point estimate | 15/200 = 7.5%; Wilson 95% CI [4.6%, 12.0%] |
 | Gate 2 / H1: accuracy within 2 points and ≥30% fewer BM25 calls | PASS | B1 31.9% vs SAE 31.5%, BM25 calls 49.2% (reduction 50.8%) on 4000 answerable questions |
-| Gate 3: latency of all chosen methods | PARTIAL | Current routed latency measures layer 17, not the validation-selected SAE layer |
+| Gate 3: latency of all chosen methods | COMPLETE | Selected SAE L29 p50 234.4 ms; dense L22 p50 242.6 ms; B1 231.3 ms. H4 FAIL by predeclared median criterion. Composed stage timings, n=200. |
 
 ## H2: SAE versus dense
 
@@ -41,11 +41,19 @@ The per-question unsafe-answer rate includes abstentions as safe; the separate c
 
 ## Existing latency evidence
 
-- `b1_always_retrieve`: p50=251.4 ms, p95=541.0 ms, BM25 calls=100.0% (n=200).
-- `b4_verbalised`: p50=466.2 ms, p95=790.2 ms, BM25 calls=59.0% (n=200).
-- `b8_tfidf_lr`: p50=154.5 ms, p95=411.3 ms, BM25 calls=26.0% (n=200).
-- `gemma3-4b-it__miss_as_retrieve__sae16k_last@L17__l2`: p50=211.8 ms, p95=479.6 ms, BM25 calls=29.5% (n=200).
-- `gemma3-4b-it__miss_as_retrieve__resid_last@L17__l2`: p50=208.5 ms, p95=457.8 ms, BM25 calls=27.5% (n=200).
+- `b1_always_retrieve`: p50=231.3 ms, p95=492.8 ms, mean=273.7 ms; BM25 calls=100.0% (n=200).
+- `b2_never_retrieve`: p50=182.7 ms, p95=358.5 ms, mean=202.3 ms; BM25 calls=0.0% (n=200).
+- `b3_oracle`: p50=184.9 ms, p95=411.9 ms, mean=182.1 ms; BM25 calls=43.5% (n=200).
+- `b4_verbalised`: p50=427.0 ms, p95=718.2 ms, mean=438.3 ms; BM25 calls=59.0% (n=200).
+- `b8_tfidf_lr`: p50=184.9 ms, p95=419.4 ms, mean=196.4 ms; BM25 calls=38.5% (n=200).
+- `gemma3-4b-it__miss_as_retrieve__sae16k_last@L29__l2`: p50=234.4 ms, p95=466.6 ms, mean=229.1 ms; BM25 calls=39.0% (n=200).
+- `gemma3-4b-it__miss_as_retrieve__resid_last@L22__l2`: p50=242.6 ms, p95=465.8 ms, mean=247.5 ms; BM25 calls=47.0% (n=200).
+
+## H4: selected-controller latency
+
+**H4 NOT SUPPORTED:** Median SAE L29 latency 234.4 ms versus always-retrieve 231.3 ms and verbalised router 427.0 ms. H4 requires the SAE median to beat both.
+The selected dense L22 median is 242.6 ms. SAE improves mean latency by 16.3% over always-retrieve (229.1 versus 273.7 ms), and p95 is 466.6 versus 492.8 ms.
+These are per-question composed costs from independently measured stages (GPU generation/controller plus prior BM25 retrieval timings), not integrated serving-system stopwatch measurements. The 200 timed questions are the first 100 each from NQ and TriviaQA test, not a random workload sample.
 
 ## Regression and diagnostic evidence
 
@@ -61,7 +69,7 @@ String matching in question answering has false positives and false negatives; t
 
 ## 6. Conclusion
 
-Use the gate-by-gate evidence above to state supported and unsupported hypotheses. Do not claim universal SAE superiority or faster latency at an unmeasured layer.
+Use the gate-by-gate evidence above to state supported and unsupported hypotheses. State the H4 median-latency failure despite improved mean and tail latency. Do not claim universal SAE superiority or full serving-system measurements.
 
 ## References
 
