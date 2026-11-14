@@ -31,7 +31,7 @@
   },
 )
 #let fig(path, cap) = block(width: 100%, above: 0.5cm, below: 0.6cm, {
-  align(center, image(path, width: 88%))
+  align(center, image(path, width: 100%))
   v(-0.15cm)
   text(size: 17pt, fill: ink2, cap)
 })
