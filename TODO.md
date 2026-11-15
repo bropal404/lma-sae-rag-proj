@@ -3,6 +3,7 @@
 Move items from "To do" to "Done" as you finish them and commit the change. The current status and the plan behind each item are in the mid-evaluation report ([report/report_mid.pdf](report/report_mid.pdf)), sections 7 and 8.
 
 **Status (2026-11-03):** BM25 retrieval is finished for all 13,500 questions, and Gemma 3 4B generations and labels exist for the benchmark splits. A two-way probe has run on 4B on a separate sample (test macro-F1: dense 0.71, SAE 0.67, question text 0.63, majority 0.40). The default label rule fails Gate 0, and the SAE probe scores lower with 2,000 labels than with 1,000. The rest of the project is now done by one person (Gopal).
+**Status (2026-11-03):** BM25 retrieval is finished for all 13,500 questions, and Gemma 3 4B generations and labels exist for the benchmark splits. A two-way probe has run on 4B on a separate sample (test macro-F1: dense 0.71, SAE 0.67, question text 0.63, majority 0.40). The default label rule fails Gate 0, and the SAE probe scores lower with 2,000 labels than with 1,000. Day counts below are rough estimates; each person has about 4.5–5 days of core work.
 
 ## Done
 
