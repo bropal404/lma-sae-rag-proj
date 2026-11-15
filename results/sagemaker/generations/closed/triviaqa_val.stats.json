@@ -1,0 +1,12 @@
+{
+  "file": "triviaqa_val",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 500,
+  "accuracy": 0.512,
+  "accuracy_hole": 0.5096,
+  "seconds": 12.4,
+  "sec_per_1k": 24.9,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

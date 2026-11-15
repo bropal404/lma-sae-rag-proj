@@ -1,0 +1,12 @@
+{
+  "file": "pilot",
+  "condition": "bm25",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 500,
+  "accuracy": 0.298,
+  "accuracy_hole": 0.0955,
+  "seconds": 83.7,
+  "sec_per_1k": 167.3,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

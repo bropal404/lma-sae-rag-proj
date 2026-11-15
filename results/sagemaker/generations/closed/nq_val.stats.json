@@ -1,0 +1,12 @@
+{
+  "file": "nq_val",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 500,
+  "accuracy": 0.182,
+  "accuracy_hole": 0.1948,
+  "seconds": 13.7,
+  "sec_per_1k": 27.5,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

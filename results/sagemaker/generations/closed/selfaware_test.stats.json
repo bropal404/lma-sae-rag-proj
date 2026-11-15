@@ -1,0 +1,12 @@
+{
+  "file": "selfaware_test",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 500,
+  "accuracy": 0.0,
+  "accuracy_hole": null,
+  "seconds": 13.0,
+  "sec_per_1k": 26.1,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

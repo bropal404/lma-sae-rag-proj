@@ -1,0 +1,12 @@
+{
+  "file": "triviaqa_train",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 4000,
+  "accuracy": 0.5228,
+  "accuracy_hole": 0.5148,
+  "seconds": 97.2,
+  "sec_per_1k": 24.3,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

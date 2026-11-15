@@ -1,0 +1,12 @@
+{
+  "file": "nq_test",
+  "condition": "bm25",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 1000,
+  "accuracy": 0.2,
+  "accuracy_hole": 0.0647,
+  "seconds": 171.3,
+  "sec_per_1k": 171.3,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

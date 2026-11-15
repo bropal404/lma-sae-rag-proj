@@ -1,0 +1,12 @@
+{
+  "file": "hotpotqa_test",
+  "condition": "closed",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 1000,
+  "accuracy": 0.193,
+  "accuracy_hole": 0.2086,
+  "seconds": 27.0,
+  "sec_per_1k": 27.0,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

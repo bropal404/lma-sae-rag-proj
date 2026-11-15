@@ -1,0 +1,12 @@
+{
+  "file": "popqa_test",
+  "condition": "gold",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 628,
+  "accuracy": 0.7038,
+  "accuracy_hole": null,
+  "seconds": 53.2,
+  "sec_per_1k": 84.7,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

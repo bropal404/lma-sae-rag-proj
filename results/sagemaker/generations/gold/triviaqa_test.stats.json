@@ -1,0 +1,12 @@
+{
+  "file": "triviaqa_test",
+  "condition": "gold",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 927,
+  "accuracy": 0.8403,
+  "accuracy_hole": 0.8555,
+  "seconds": 66.7,
+  "sec_per_1k": 71.9,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}

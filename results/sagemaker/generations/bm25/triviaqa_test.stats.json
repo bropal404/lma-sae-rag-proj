@@ -1,0 +1,12 @@
+{
+  "file": "triviaqa_test",
+  "condition": "bm25",
+  "backend": "hf",
+  "model": "unsloth/gemma-3-4b-it",
+  "n": 1000,
+  "accuracy": 0.51,
+  "accuracy_hole": 0.1555,
+  "seconds": 162.9,
+  "sec_per_1k": 162.9,
+  "rescored": "answers.is_correct v2 (Gate 1 matcher fix)"
+}
