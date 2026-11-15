@@ -4,7 +4,7 @@
 **Team:** Gopal Kataria (2023112006) · Manya Jain (2024102068) · Nidhi Vaidya (2023114005) · Salvik Krishna (2023113015)
 
 
-**[Final report (PDF)](report/final/final_report.pdf)** · **[Editable LaTeX source](report/final/main.tex)** · **[Final evaluation](results/final/final_summary.md)** · **[Gate summary](results/final/gate_summary.json)**
+**[Final report (PDF)](report/final/final_report.pdf)** · **[Final evaluation](results/final/final_summary.md)** · **[Gate summary](results/final/gate_summary.json)**
 
 ## What the project does
 
@@ -27,17 +27,71 @@ The 200-item strict label audit found **15 errors (7.5%)**, with a 95% Wilson in
 
 ## Project Pipeline
 ```mermaid
-flowchart TD
-    Q[Question] --> LLM[Frozen Gemma 3 4B<br/>one forward pass]
-    LLM --> ACT[Last-token activation, layer L]
-    ACT --> SAE[Frozen Gemma Scope 2 SAE<br/>sparse features]
-    ACT -. dense comparison .-> PROBE
-    SAE --> PROBE[Logistic-regression probe]
-    PROBE -->|ANSWER| A[Answer from model]
-    PROBE -->|RETRIEVE| R[BM25 top-3 passages, then answer]
-    PROBE -->|ABSTAIN| X[Decline or hand off]
-```
+flowchart LR
+    Q([Question])
 
+    subgraph PASS [Frozen model: one forward pass, no answer tokens]
+        LLM[Gemma 3 4B Instruct]
+        H[Last-token residual<br/>activation h_L]
+        LLM --> H
+    end
+
+    subgraph FEAT [Probe inputs]
+        SAE[Gemma Scope 2 SAE<br/>16k sparse features z_L<br/>primary, layer 29]
+        DENSE[Dense residual<br/>raw h_L<br/>comparator, layer 22]
+    end
+
+    PROBE{{Logistic-regression probe<br/>class-weighted,<br/>validation-tuned thresholds}}
+
+    A[ANSWER<br/>generate directly]
+    R[RETRIEVE<br/>BM25 top-3, then answer]
+    X[ABSTAIN<br/>decline or hand off]
+    W[(DPR Wikipedia<br/>21M passages)]
+
+    Q --> LLM
+    H --> SAE
+    H -.-> DENSE
+    SAE --> PROBE
+    DENSE -.-> PROBE
+    PROBE --> A
+    PROBE --> R
+    PROBE --> X
+    R -.-> W
+
+    classDef input fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#78350f
+    classDef frozen fill:#1e293b,stroke:#0f172a,stroke-width:2px,color:#f8fafc
+    classDef act fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#312e81
+    classDef sae fill:#ccfbf1,stroke:#0d9488,stroke-width:3px,color:#134e4a
+    classDef dense fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,stroke-dasharray:5,color:#1e3a8a
+    classDef probe fill:#ede9fe,stroke:#7c3aed,stroke-width:3px,color:#3b0764
+    classDef answer fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    classDef retrieve fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e
+    classDef abstain fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
+    classDef db fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155
+
+    class Q input
+    class LLM frozen
+    class H act
+    class SAE sae
+    class DENSE dense
+    class PROBE probe
+    class A answer
+    class R retrieve
+    class X abstain
+    class W db
+
+    style PASS fill:#f8fafc,stroke:#94a3b8,stroke-width:2px,stroke-dasharray:6,color:#334155
+    style FEAT fill:#fafaf9,stroke:#a8a29e,stroke-width:2px,stroke-dasharray:6,color:#44403c
+
+    linkStyle 2 stroke:#0d9488,stroke-width:3px
+    linkStyle 3 stroke:#3b82f6,stroke-width:2px
+    linkStyle 4 stroke:#0d9488,stroke-width:3px
+    linkStyle 5 stroke:#3b82f6,stroke-width:2px
+    linkStyle 6 stroke:#16a34a,stroke-width:3px
+    linkStyle 7 stroke:#0284c7,stroke-width:3px
+    linkStyle 8 stroke:#dc2626,stroke-width:3px
+    linkStyle 9 stroke:#94a3b8,stroke-width:2px
+```
 
 ## Setup and quick verification
 
@@ -83,7 +137,3 @@ uv run python scripts/analysis/bundle_analysis.py
 - **Generation:** `unsloth/gemma-3-4b-it`, greedy decoding with up to 32 new tokens; corrected answer matching and `miss_as_retrieve` labels. See `configs/sagemaker.yaml`.
 - **Probe inputs:** Gemma Scope 2 residual-post JumpReLU SAE, width 16,384; dense residual-stream baseline. Candidate layers 9, 17, 22, 29; class-weighted logistic regression, three-fold hyperparameter selection.
 - **Latency:** NVIDIA L4, batch size 1, first 100 NQ + 100 TriviaQA test questions. `scripts/sagemaker/latency_selected_measure.py` and `latency_selected_route.py` measure selected SAE L29 and dense L22. End-to-end latency is **composed from measured stages and BM25 timings**, not a directly instrumented online serving request.
-
-## Limitations and interpretation
-
-Gold passages can be retrieved answer-bearing stand-ins rather than independently verified evidence. The hole experiment is lexical top-100 filtering. The label audit is small (strict 7.5%; lenient 11%), the bootstrap's comparison target matters (raw probe-grid scores versus threshold-routed actions), and **PopQA transfer is notably weaker for SAE**. See the paper's Limitations and Evaluations sections for full discussion.
