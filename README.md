@@ -1,7 +1,8 @@
 # SAE-Gated RAG: Deciding to Answer, Retrieve, or Abstain Before Generation
 
-**LMA Group Project — final submission**  
-**Team:** Gopal Kataria · Manya Jain · Nidhi Vaidya · Salvik Krishna
+**LMA Group Project (final submission)**  
+**Team:** Gopal Kataria (2023112006) · Manya Jain (2024102068) · Nidhi Vaidya (2023114005) · Salvik Krishna (2023113015)
+
 
 **[Final report (PDF)](report/final/final_report.pdf)** · **[Editable LaTeX source](report/final/main.tex)** · **[Final evaluation](results/final/final_summary.md)** · **[Gate summary](results/final/gate_summary.json)**
 
@@ -24,10 +25,24 @@ The primary evaluation uses **4,000 answerable test questions** from Natural Que
 
 The 200-item strict label audit found **15 errors (7.5%)**, with a 95% Wilson interval of about 4.6–12.0%. SAE routing meets the prespecified retrieval-efficiency target, but the dense probe leads on primary macro-F1, and SAE does not beat always-retrieve on median latency. Abstention reduces wrong answers under simulated retrieval holes, at the expense of answer coverage. We report these negative and mixed findings rather than redefining the hypotheses.
 
+## Project Pipeline
+```mermaid
+flowchart TD
+    Q[Question] --> LLM[Frozen Gemma 3 4B<br/>one forward pass]
+    LLM --> ACT[Last-token activation, layer L]
+    ACT --> SAE[Frozen Gemma Scope 2 SAE<br/>sparse features]
+    ACT -. dense comparison .-> PROBE
+    SAE --> PROBE[Logistic-regression probe]
+    PROBE -->|ANSWER| A[Answer from model]
+    PROBE -->|RETRIEVE| R[BM25 top-3 passages, then answer]
+    PROBE -->|ABSTAIN| X[Decline or hand off]
+```
+
+
 ## Setup and quick verification
 
 Requires Python (version specified in `.python-version`) and [`uv`](https://docs.astral.sh/uv/). From the repository root:
-
+> we used an *ml.g6.2xlarge (NVIDIA L4, 32GBvRAM)* instance on AWS SageMaker AI 
 ```bash
 uv sync
 uv run pytest -q
@@ -63,7 +78,6 @@ uv run python scripts/analysis/bundle_analysis.py
 **Important:** Large raw question-level feature tensors and caches are not part of a standard Git clone; the Git-tracked summaries alone are not sufficient to refit probes or recompute bootstrap intervals from scratch. The original 4B generation and feature-extraction artifacts must be obtained from the team's archived SageMaker outputs. Do not substitute derived CSV exports for missing raw examples.
 
 ## Main experimental configuration
-
 - **Data:** Natural Questions and TriviaQA, each 4,000 train / 500 validation / 1,000 test; PopQA (1,000), HotpotQA (1,000), SelfAware (500 unanswerable), plus a 500-question pilot sampled from training questions; seed 13. **13,500 unique questions** in the main inventory, excluding the pilot duplicates.
 - **Retrieval:** 2018 DPR-style Wikipedia, **21,015,324 passages** and 22 Pyserini/Lucene BM25 shards; score top-100, supply top-3. A lexical query-time filter simulates holes; it does **not** physically delete documents.
 - **Generation:** `unsloth/gemma-3-4b-it`, greedy decoding with up to 32 new tokens; corrected answer matching and `miss_as_retrieve` labels. See `configs/sagemaker.yaml`.
